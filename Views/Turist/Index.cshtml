@@ -1,0 +1,40 @@
+﻿@model TourApp.Models.Turist
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@if (Session["userID"] != null)
+{
+    <button type="button" class="btn btn-primary mb-1 mb-1" onclick="location.href='@Url.Action("CreateTurist","Turist")'">
+        Yeni Turist Ekle
+    </button>
+}
+
+
+
+<div class="form-group">
+    @if (ViewBag.KafileList != null)
+    {
+        @Html.DropDownListFor(model => model.kafileID, ViewBag.KafileList as SelectList, "Kafileyi Seçin", new { @class = "form-control" })
+    }
+</div>
+
+<div id="divPartialView">
+    @Html.Action("GetTurists", "Turist")
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    $("#kafileID").change(function (event) {
+        var kafileID = $(this).val();
+        $.ajax({
+            url: "/Turist/GetTurists?kafileID=" + kafileID,
+            type: "get",
+            dataType: "html",
+            success: function (data) {
+                $("#divPartialView").html(data);
+            }
+        });
+    });
+</script>

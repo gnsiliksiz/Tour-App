@@ -1,0 +1,205 @@
+﻿@if(Session["userID"] == null)
+{
+    Response.Redirect("~/Hata/InsufficientPrivileges");
+}
+@model TourApp.Models.Otel
+
+@{
+    ViewBag.Title = "OtelEdit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("OtelEdit", "Otel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.Hidden("otelID")
+    @Html.AntiForgeryToken()
+
+    <section id="vertical-wizard">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Otel Tanımlama</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="wizard-vertical">
+                        <!-- step 1 -->
+                        <h3>
+                            <span class="mr-2">
+                                <img src="~/frest-admin-v1.0/app-assets/fonts/LivIconsEvo/svg/notebook.svg" height="70" />
+                            </span>
+
+                            <span class="icon-title">
+                                <span class="d-block">Genel Bilgiler</span>
+                                <small class="text-muted">Otel Bilgilerini Giriniz</small>
+                            </span>
+                        </h3>
+                        <!-- step 1 end-->
+                        <!-- step 1 content -->
+                        <fieldset class="pt-0">
+                            <h6 class="pb-50">Otel Bilgileri</h6>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Otel Adi</label>
+                                        @Html.TextBox("otelAd", null, new { @placeholder = "Otel Adı", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Yıldız</label>
+                                        <select class="custom-select form-control" id="otelTip" name="otelTip">
+                                            <option value="1">1 Yıldız</option>
+                                            <option value="2">2 Yıldız</option>
+                                            <option value="3">3 Yıldız</option>
+                                            <option value="4">4 Yıldız</option>
+                                            <option value="5">5 Yıldız</option>
+                                            <option value="6">6 Yıldız</option>
+                                            <option value="7">7 Yıldız</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Para Birimi</label>
+                                        <select class="custom-select form-control" id="otelFiyatBirimi" name="otelFiyatBirimi">
+                                            <option value="Tl (₺)">Tl (₺)</option>
+                                            <option value="Euro (€)">Euro (€)</option>
+                                            <option value="Dolar ($)">Dolar ($)</option>
+                                            <option value="Sterlin (£)">Sterlin (£)</option>
+                                            <option value="Yuan (¥)">Yuan (¥)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Fotoğraf Seçiniz</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="otelResim" id="otelResim" value="" accept=".jpg,.png,.gif,.JPEG,.jpeg" />
+                                        <label class="custom-file-label" for="">Dosya Seçiniz</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    @if (Model.otelResim != null)
+                                    {
+                                        <div class="form-group">
+                                            @Html.Label("Mevcut Foto", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <img src="@Model.otelResim" alt="IMAGES" />
+                                            </div>
+
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </fieldset>
+                        <!-- step 1 content end-->
+                        <!-- step 2 -->
+                        <h3>
+                            <span class="mr-2">
+                                <img src="~/frest-admin-v1.0/app-assets/fonts/LivIconsEvo/svg/location.svg" height="70" />
+                            </span>
+                            <span class="icon-title">
+                                <span class="d-block">İletişim Bilgileri</span>
+                                <small class="text-muted">İl İlçe Adres Bilgilerini Giriniz.</small>
+                            </span>
+                        </h3>
+                        <!-- step 2 end-->
+                        <!-- step 2 content -->
+                        <fieldset class="pt-0">
+                            <h6 class="py-50">İletişim Bilgileri</h6>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Telefon</label>
+                                        @Html.TextBox("otelTelefon", null, new { @placeholder = "Telefon", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="jobtitle">Adres</label>
+                                        @Html.TextBox("otelAdres", null, new { @placeholder = "Adres", @class = "form-control" })
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>İl</label>
+                                        @Html.TextBox("otelIl", null, new { @placeholder = "İl", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>İl</label>
+                                        @Html.TextBox("otelIlce", null, new { @placeholder = "İlçe", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <!-- step 2 content end-->
+                        <!-- section 3 -->
+                        <h3>
+                            <span class="mr-2">
+                                <img src="~/frest-admin-v1.0/app-assets/fonts/LivIconsEvo/svg/euro.svg" height="70" />
+                            </span>
+                            <span class="icon-title">
+                                <span class="d-block">Fiyat Bilgileri</span>
+                                <small class="text-muted">Oda Türlerine Göre Fiyat Belirle</small>
+                            </span>
+                        </h3>
+                        <!-- section 3 end-->
+                        <!-- step 3 content -->
+                        <fieldset class="pt-0">
+                            <h6 class="py-50">Gecelik Fiyatları Belirleyin.</h6>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Single Room</label>
+                                        @Html.TextBox("otelSingleRoomFiyat", null, new { @placeholder = "Single Room", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Double Room</label>
+                                        @Html.TextBox("otelDoubleRoomFiyat", null, new { @placeholder = "Double Room", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>King Suit</label>
+                                        @Html.TextBox("otelKingSuitFiyat", null, new { @placeholder = "King Suit", @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Family Room</label>
+                                        @Html.TextBox("otelFamilyRoomFiyat", null, new { @placeholder = "Family Room", @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <!-- step 3 content end-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Kaydet" class="btn btn-danger" />
+        </div>
+    </div>
+}
+
+<div class="text-danger">
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+

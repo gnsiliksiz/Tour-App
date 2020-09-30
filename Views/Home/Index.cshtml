@@ -1,0 +1,297 @@
+﻿@model IList<TourApp.Models.Tur>
+@{
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="row">
+    <div class="col-12 mt-1 mb-2">
+        <h4>Tur İstatistikleri</h4>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-3 col-md-3 col-sm-6">
+        <div class="card text-center">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="badge-circle badge-circle-lg badge-circle-light-info mx-auto my-1">
+                        <i class="bx bx-purchase-tag font-medium-5"></i>
+                    </div>
+                    <p class="text-muted mb-0 line-ellipsis">Yakın Turlar</p>
+                    <h2 class="mb-0">@ViewBag.GelecekTurlar</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-3 col-sm-6">
+        <div class="card text-center">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="badge-circle badge-circle-lg badge-circle-light-warning mx-auto my-1">
+                        <i class="bx bx-purchase-tag font-medium-5"></i>
+                    </div>
+                    <p class="text-muted mb-0 line-ellipsis">Tamamlanan Turlar</p>
+                    <h2 class="mb-0">@ViewBag.BitmisTurlar</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-3 col-sm-6">
+        <div class="card text-center">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
+                        <i class="bx bx-purchase-tag font-medium-5"></i>
+                    </div><p class="text-muted mb-0 line-ellipsis">Ertelenen Turlar</p>
+                    <h2 class="mb-0">@ViewBag.ErtelenenTurlar</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-3 col-sm-6">
+        <div class="card text-center">
+            <div class="card-content">
+                <img class="card-img img-fluid" src="~/frest-admin-v1.0/app-assets/images/slider/08.jpg" alt="Card image">
+                <div class="card-img-overlay overlay-success d-flex justify-content-between flex-column">
+                    <div class="overlay-content">
+                        <h4 class="card-title mb-50">Gelen Teklifler</h4>
+                        <p class="card-text text-ellipsis">
+                            Alt Firmaların oluşturduğu kotasyon tekliflerini görünüleyin.
+                        </p>
+                    </div>
+                    <div class="overlay-status">
+                        <a href="@Url.Action("Teklifler","Home")" class="btn btn-success">Görüntüle </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--TURLAR-->
+<div class="row">
+    <!--GRAFİK-->
+    <div class="col-md-6 col-sm-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Tur Analizi</h4>
+                <i class="bx bx-dots-vertical-rounded font-medium-3 cursor-pointer"></i>
+            </div>
+            <div class="card-content">
+                <div class="card-body pb-1">
+                    <div class="d-flex justify-content-around align-items-center flex-wrap">
+                        <div class="user-analytics">
+                            <i class="bx bx-user mr-25 align-middle"></i>
+                            <span class="align-middle text-muted">Firma Sayısı</span>
+                            <div class="d-flex">
+                                <div id="radial-success-chart"></div>
+                                <h3 class="mt-1 ml-50">@ViewBag.FirmaSayisi</h3>
+                            </div>
+                        </div>
+                        <div class="sessions-analytics">
+                            <i class="bx bx-trending-up align-middle mr-25"></i>
+                            <span class="align-middle text-muted">Kafile Sayısı</span>
+                            <div class="d-flex">
+                                <div id="radial-warning-chart"></div>
+                                <h3 class="mt-1 ml-50">@ViewBag.KafileSayisi</h3>
+                            </div>
+                        </div>
+                        <div class="bounce-rate-analytics">
+                            <i class="bx bx-pie-chart-alt align-middle mr-25"></i>
+                            <span class="align-middle text-muted">Onaylanan Teklifler</span>
+                            <div class="d-flex">
+                                <div id="radial-danger-chart"></div>
+                                <h3 class="mt-1 ml-50">@ViewBag.KotasyonSayisi</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="analytics-bar-chart"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--TUR YUZDESİ-->
+    <div class="col-xl-6 col-md-6 progress-card">
+        <div class="card">
+            <div class="card-header border-bottom d-flex justify-content-between align-items-center pr-2">
+                <h5 class="card-title">Turlar</h5>
+                <ul class="list-inline mb-0">
+                    <li class="mr-50"> <i class="bullet bullet-xs bullet-primary mr-50"></i>İlerleyiş </li>
+                    <li><i class="bx bx-dots-vertical-rounded font-medium-3 align-middle cursor-pointer"></i></li>
+                </ul>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-borderless">
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            var bas = Convert.ToDateTime(item.turBaslangic);
+                            var bitis = Convert.ToDateTime(item.turBitis);
+                            var bugun = DateTime.Today;
+                            var fark = (bitis - bas).TotalDays;
+                            var baslamismi = DateTime.Compare(bugun, bas);
+                            var bitmismi = DateTime.Compare(bitis, bugun);
+                            var bugunfark = bugun.Subtract(bas).TotalDays;
+                            //var yuzde = (simdidenfark / (100 * (fark.TotalDays))) ;
+                            var yuzde = (bugunfark / fark) * 100;
+                            int intyuzde = Convert.ToInt32(yuzde);
+                            if (baslamismi == 1 && bitmismi == 1)
+                            {
+                                <tr>
+                                    <td class="w-25">@item.turAd</td>
+                                    @*<td>
+                                            <div class="progress progress-sm mb-0 progress-bar-danger">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="@Convert.ToInt32(yuzde)" aria-valuemin="80" aria-valuemax="100" style="width:@yuzde%;"></div>
+                                            </div>
+                                        </td>*@
+                                    <td>
+                                        @if (intyuzde > 0 && intyuzde < 30)
+                                        {
+                                            <div class="progress progress-bar-danger progress-sm mb-0">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="80" aria-valuemax="100" style="width:@intyuzde%"></div>
+                                            </div>
+                                        }
+                                        @if (intyuzde >= 30 && intyuzde < 50)
+                                        {
+                                            <div class="progress progress-bar-warning progress-sm mb-0">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="80" aria-valuemax="100" style="width:@intyuzde%"></div>
+                                            </div>
+                                        }
+                                        @if (intyuzde >= 50 && intyuzde < 70)
+                                        {
+                                            <div class="progress progress-bar-info progress-sm mb-0">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="80" aria-valuemax="100" style="width:@intyuzde%"></div>
+                                            </div>
+                                        }
+                                        @if (intyuzde >= 70 && intyuzde <= 100)
+                                        {
+                                            <div class="progress progress-bar-success progress-sm mb-0">
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="10" aria-valuemin="80" aria-valuemax="100" style="width:@intyuzde%"></div>
+                                            </div>
+                                        }
+
+
+
+                                    </td>
+                                    <td class="w-25 text-right">% @yuzde.ToString("#.##")</td>
+                                </tr>
+                            }
+
+                        }
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+@*<script src="~/frest-admin-v1.0/app-assets/js/scripts/pages/dashboard-analytics.js"></script>*@
+<script>
+    $(window).on("load", function () {
+        var $primary = '#5A8DEE';
+        var $success = '#39DA8A';
+        var $danger = '#FF5B5C';
+        var $warning = '#FDAC41';
+        var $info = '#00CFDD';
+        var $label_color = '#475f7b';
+        var $primary_light = '#E2ECFF';
+        var $danger_light = '#ffeed9';
+        var $gray_light = '#828D99';
+        var $sub_label_color = "#596778";
+        var $radial_bg = "#e7edf3";
+        var analyticsBarChartOptions = {
+            chart: {
+                height: 260,
+                type: 'bar',
+                toolbar: {
+                    show: false
+                }
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '20%',
+                    endingShape: 'rounded'
+                },
+            },
+            legend: {
+                horizontalAlign: 'right',
+                offsetY: -10,
+                markers: {
+                    radius: 50,
+                    height: 8,
+                    width: 8
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            colors: [$primary, $primary_light],
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shade: 'light',
+                    type: "vertical",
+                    inverseColors: true,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 70, 100]
+                },
+            },
+            series: [{
+                name: '2019',
+                data: [80, 95, 150, 210, 140, 230, 300, 280, 130]
+            }, {
+                name: '2018',
+                data: [50, 70, 130, 180, 90, 180, 270, 220, 110]
+            }],
+            xaxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                labels: {
+                    style: {
+                        colors: $gray_light
+                    }
+                }
+            },
+            yaxis: {
+                min: 0,
+                max: 300,
+                tickAmount: 3,
+                labels: {
+                    style: {
+                        color: $gray_light
+                    }
+                }
+            },
+            legend: {
+                show: false
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return "$ " + val + " thousands"
+                    }
+                }
+            }
+        }
+
+        var analyticsBarChart = new ApexCharts(
+            document.querySelector("#analytics-bar-chart"),
+            analyticsBarChartOptions
+        );
+
+        analyticsBarChart.render();
+    });
+</script>
+

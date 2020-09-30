@@ -1,0 +1,224 @@
+﻿@model IList<TourApp.Models.Ekstra>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@if (Session["userID"] != null)
+{
+    <button type="button" class="btn btn-primary mb-1 mb-1" onclick="location.href='@Url.Action("Create","Ekstra")'">
+        Etkinlik Ekle
+    </button>
+}
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-danger">Ekstralar</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="card-text">
+                                Düzenleyeceğiniz turlar için gidilecek ekstra yerleri planlayın.
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("ExportToExcel","Ekstra")'">
+                                Excele Dönüştür
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration" id="example">
+                            <thead>
+                                <tr>
+                                    <th>Etkinlik</th>
+                                    <th>İl</th>
+                                    <th>İlçe</th>
+                                    <th>Telefon</th>
+                                    <th>Fiyat</th>
+                                    @if (Session["userID"] != null)
+                                    {
+                                        <th></th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @if (item.ekstraFoto != null)
+                                            {
+                                                <img src="@item.ekstraFoto" alt="@item.ekstraID" class="rounded-circle" height="30" width="30" />
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Uploads/EkstraPhoto/defaultEkstra.jpg" alt="@item.ekstraAd" class="rounded-circle" height="30" width="30" />
+                                            }
+                                            &nbsp;&nbsp;
+                                            @item.ekstraAd
+                                        </td>
+                                        <td>
+                                            @item.ekstraIl
+                                        </td>
+                                        <td>
+                                            @item.ekstraIlce
+                                        </td>
+                                        <td>@item.ekstraTelefon</td>
+                                        <td>
+                                            <span class="text text-success">@item.ekstraFiyat</span>
+                                        </td>
+                                        @if (Session["userID"] != null)
+                                        {
+                                            <td>
+                                                <a href="@Url.Action("EkstraEdit", "Ekstra", new { ekstraID = item.ekstraID })"><i class="badge-circle badge-circle-light-primary bx bx-edit font-medium-1"></i></a>
+                                                <a href="#"><i class="badge-circle badge-circle-light-danger bx bx-trash font-medium-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteEkstraRecord(@item.ekstraID)"></i></a>
+                                            </td>
+                                        }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADD MODAL-->
+<div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">Etkinlik Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="" id="Registration" enctype="multipart/form-data">
+                    @Html.Hidden("ekstraID")
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("ekstraAd", null, new { @placeholder = "Etkinlik Tanımı", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("ekstraTelefon", null, new { @placeholder = "Telefon", @class = "form-control", @type = "number" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("ekstraFiyat", null, new { @placeholder = "Fiyat", @class = "form-control", @required = "required", @type = "number" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("ekstraIl", null, new { @placeholder = "İl", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("ekstraIlce", null, new { @placeholder = "İlçe", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("ekstraAdres", null, new { @placeholder = "Adres", @class = "form-control", @required = "required" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="ekstraFoto" id="ekstraFoto" value="" accept=".jpg,.png,.gif,.JPEG,.jpeg" />
+                            <label class="custom-file-label" for="">Dosya Seçiniz</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-primary" onclick="SaveForm()">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal">Etkinlik Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> Seçilen Etkinliği kalıcı olarak silmek istediğinize emin misiniz ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-danger" onclick="ConfirmDelete()">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/polyfill.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+
+<!--DATATABLE-->
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            },
+            buttons: [
+                'pdfHtml5',
+                'print',
+                'copyHtml5',
+            ]
+        });
+    });
+</script>
+
+<!--DELETE-->
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteEkstraRecord = function (ekstraID) {
+        $("#ekstraID").val(ekstraID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var ekstraID = $("#ekstraID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Ekstra/DeleteEkstraRecord?ekstraID=" + ekstraID,
+            success: function (result) {
+                //alert("Silme islemi Basarili!..");
+                swal("Tebrikler!", "Silme işlemi Başarılı", "success");
+                window.location.href = "/Ekstra/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<TourApp.Models.Rehber>
+@{
+    ViewBag.Title = "RehberInfo";
+    Layout = null;
+}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<div class="container">
+    <h4 style=" text-align:center;border-bottom:1px solid #808080">Rehber Detay</h4>
+    @foreach (var item in Model)
+    {
+        <p class="text-info"><span class="text-muted">Kullanıcı Adı:</span> @item.rehberUsername</p>
+        <p class="text-info"><span class="text-muted">Ad:</span> @item.rehberAd</p>
+        <p class="text-info"><span class="text-muted">Telefon:</span> @item.rehberTelefon</p>
+        <p class="text-info"><span class="text-muted">Mail:</span> @item.rehberEmail</p>
+        <p class="text-info"><span class="text-muted">Adres:</span> @item.rehberAdres</p>
+    }
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+

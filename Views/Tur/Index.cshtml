@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+    <button type="button" class="btn btn-primary mb-1 mb-1" onclick="location.href='@Url.Action("CreateTur","Tur")'">
+        Tur Oluştur
+    </button>
+
+<!--TAKVİM-->
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title text-danger">Turlarım</h4>
+    </div>
+    <div class="card-content">
+        <div class="card-body card-dashboard">
+            <div id="calender"></div>
+        </div>
+    </div>
+</div>
+<!--MODAL-->
+<div id="myModal" class="modal fade text-left" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title white" id="eventTitle">Tur Özeti</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <p id="pDetails"></p>
+                <button type="button" id="btnEdit" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="glyphicon glyphicon-remove">Düzenle</span>
+                </button>
+                <button type="button" id="btnErtele" class="btn btn-warning" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="glyphicon glyphicon-remove">Ertele</span>
+                </button>
+                <button type="button" id="btnDelete" class="btn btn-danger" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="glyphicon glyphicon-remove">Sil</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Kapat</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var events = [];
+        var selectedEvent = null;
+        FetchEventAndRenderCalendar();
+        function FetchEventAndRenderCalendar() {
+            events = [];
+            $.ajax({
+                type: "GET",
+                url: "/Tur/GetTur",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        events.push({
+                            turID: v.turID,
+                            title: v.turAd,
+                            description: v.turAciklama,
+                            start: moment(v.turBaslangic),
+                            end: v.turBitis != null ? moment(v.turBitis) : null,
+                            color: v.turRenk,
+                            allDay: v.isFullDay,
+                            rehber: v.rehberAd,
+                            turKod: v.turKod,
+                            turKisiSayisi: v.turKisiSayisi,
+                            turGunSayisi: v.turGunSayisi
+                        });
+                    })
+
+                    GenerateCalender(events);
+                },
+                error: function (error) {
+                    alert('Hata');
+                }
+            })
+        }
+
+        function GenerateCalender(events) {
+            $('#calender').fullCalendar('destroy');
+            $('#calender').fullCalendar({
+                contentHeight: 400,
+                defaultDate: new Date(),
+                timeFormat: 'h(:mm)a',
+                locale: 'tr',
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay,list'
+                },
+                eventLimit: false,
+                eventColor: '#fdeff9',
+                events: events,
+                eventClick: function (calEvent, jsEvent, view) {
+                    selectedEvent = calEvent;
+                    $('#myModal #eventTitle').text(calEvent.title);
+                    var $description = $('<div/>');
+                    $description.append($('<p/>').html('<b>Tur Kodu: </b>' + calEvent.turKod));
+                    $description.append($('<p/>').html('<b>Tur Notu: </b>' + calEvent.description));
+                    $description.append($('<p/>').html('<b>Kişi Sayısı: </b>' + calEvent.turKisiSayisi));
+                    $description.append($('<p/>').html('<b>Gün Sayısı: </b>' + calEvent.turGunSayisi));
+                    $description.append($('<p/>').html('<b>Başlangıç: </b>' + calEvent.start.format("DD-MMM-YYYY")));
+                    $description.append($('<p/>').html('<b>Bitiş: </b>' + calEvent.end.format("DD-MMM-YYYY")));
+                    $description.append($('<p/>').html('<b>Rehber: </b>' + calEvent.rehber));
+                    $('#myModal #pDetails').empty().html($description);
+
+                    $('#myModal').modal();
+                },
+            })
+        }
+        //SİL
+        $('#btnDelete').click(function () {
+            if (selectedEvent != null && confirm('Silmek istediğinize emin misiniz ?')) {
+                $.ajax({
+                    type: "POST",
+                    url: '/Tur/DeleteEvent',
+                    data: { 'turID': selectedEvent.turID },
+                    success: function (data) {
+                        if (data.status) {
+                            //Refresh the calender
+                            FetchEventAndRenderCalendar();
+                            $('#myModal').modal('hide');
+                        }
+                    },
+                    error: function () {
+                        alert('Hata');
+                    }
+                })
+            }
+        })
+
+    })
+</script>
+

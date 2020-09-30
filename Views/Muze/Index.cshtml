@@ -1,0 +1,186 @@
+﻿@model IList<TourApp.Models.Muze>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@if (Session["userID"] != null)
+{
+    <button type="button" class="btn btn-primary mb-1 mb-1" onclick="location.href='@Url.Action("Create","Muze")'">
+        Müze Tanımla
+    </button>
+}
+
+
+<!-- Muzeler-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-danger">Müzeler</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="card-text">
+                                Düzenleyeceğiniz turlar için gidilecek müzeleri planlayın.
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("ExportToExcel","Muze")'">
+                                Excele Dönüştür
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table zero-configuration" id="example">
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Müze</th>
+                                    <th>İl</th>
+                                    <th>İlçe</th>
+                                    <th>Giriş Fiyat</th>
+                                    @if (Session["userID"] != null)
+                                    {
+                                        <th></th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (item.muzeFoto != null)
+                                            {
+                                                <a data-toggle="popover" data-trigger="hover" id="@item.muzeID">
+                                                    <img src="@item.muzeFoto" alt="@item.muzeID" class="rounded-circle" height="30" width="30" />
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Uploads/MuzePhoto/defaultMuze.jpg" alt="@item.muzeAd" class="rounded-circle" height="30" width="30" />
+                                            }
+
+                                        </td>
+                                        <td>@item.muzeAd</td>
+                                        <td>@item.muzeIl</td>
+                                        <td>@item.muzeIlce</td>
+                                        <td><span class="text text-success">@item.muzeGirisFiyat @item.muzeFiyatBirim</span></td>
+                                        @if (Session["userID"] != null)
+                                        {
+                                            <td>
+                                                <a href="@Url.Action("MuzeEdit", "Muze", new { muzeID = item.muzeID })"><i class="badge-circle badge-circle-light-primary bx bx-edit font-medium-1"></i></a>
+                                                <a href="#"><i class="badge-circle badge-circle-light-danger bx bx-trash font-medium-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteMuzeRecord(@item.muzeID)"></i></a>
+                                            </td>
+                                        }
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Hidden("muzeID")
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal">Müze Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> Seçilen Müzeyi silmek istediğinize emin misiniz ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-danger" onclick="ConfirmDelete()">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/polyfill.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+
+<!--DATATABLE-->
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            },
+            buttons: [
+                'pdfHtml5',
+                'print',
+                'copyHtml5',
+            ]
+        });
+    });
+</script>
+
+<!-- DELETE OTEL -->
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteMuzeRecord = function (muzeID) {
+        $("#muzeID").val(muzeID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var muzeID = $("#muzeID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Muze/DeleteMuzeRecord?muzeID=" + muzeID,
+            success: function (result) {
+                swal("Tebrikler!", "Silme işlemi Başarılı", "success");
+                window.location.href = "/Muze/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>
+
+<!--DETAILS-->
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+            title: setData,
+            html: true,
+            placement: 'right'
+
+        });
+        function setData(muzeID) {
+            var set_data = '';
+            var element = $(this);
+            var muzeID = element.attr("id");
+            $.ajax({
+                url: "/Muze/MuzeInfo?muzeID" + muzeID,
+                method: "post",
+                async: false,
+                data: { muzeID: muzeID },
+                success: function (data) {
+                    set_data = data;
+                }
+
+            });
+            return set_data;
+        }
+    });
+</script>
+

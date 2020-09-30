@@ -1,0 +1,78 @@
+﻿@if (Session["userID"] == null)
+{
+    Response.Redirect("~/Hata/InsufficientPrivileges");
+}
+@model TourApp.Models.AltFirma
+
+@{
+    ViewBag.Title = "AltFirmaEdit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("AltFirmaEdit", "AltFirma", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-12 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Firmaları Düzenle</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.altFirmaID)
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Firma Adı</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    @Html.EditorFor(model => model.altFirmaAd, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.altFirmaAd, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    @Html.EditorFor(model => model.altFirmaEmail, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+                                    @Html.ValidationMessageFor(model => model.altFirmaEmail, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Şifre</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    @Html.EditorFor(model => model.altFirmaSifre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.altFirmaSifre, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Adres</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    @Html.EditorFor(model => model.altFirmaAdres, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.altFirmaAdres, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Telefon</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    @Html.EditorFor(model => model.altFirmaTel, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                    @Html.ValidationMessageFor(model => model.altFirmaTel, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="col-sm-12 d-flex justify-content-start">
+                                    <input type="submit" value="Save" class="btn btn-danger" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+

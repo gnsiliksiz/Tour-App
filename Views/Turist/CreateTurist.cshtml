@@ -1,0 +1,287 @@
+﻿@if (Session["userID"] == null)
+{
+    Response.Redirect("~/Hata/InsufficientPrivileges");
+}
+@model TourApp.Models.Kafile
+
+@{
+    ViewBag.Title = "CreateTurist";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<section id="vertical-wizard">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Kafile ve Turist Bilgileri</h4>
+        </div>
+        <div class="card-content">
+            <div class="card-body">
+                <form id="NewOrderForm" class="wizard-vertical">
+                    @Html.Hidden("kafileID")
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <!-- step 1 -->
+                    <h3>
+                        <span class="mr-2">
+                            <img src="~/frest-admin-v1.0/app-assets/fonts/LivIconsEvo/svg/notebook.svg" height="70" />
+                        </span>
+
+                        <span class="icon-title">
+                            <span class="d-block">Genel Bilgiler</span>
+                            <small class="text-muted">Kafile Bilgilerini Giriniz</small>
+                        </span>
+                    </h3>
+                    <!-- step 1 end-->
+                    <!-- step 1 content -->
+                    <fieldset class="pt-0">
+                        <h6 class="pb-50">Kafile Bilgileri</h6>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Tur Seçiniz</label>
+                                    @Html.DropDownList("turID", null, htmlAttributes: new { @class = "form-control", @id = "turID", @name = "turID" })
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Kafile Tanımı</label>
+                                    @Html.TextBox("kafileAd", null, new { @placeholder = "Kafile Tanımı Giriniz", @class = "form-control", @required = "required" })
+                                    @Html.ValidationMessageFor(model => model.kafileAd, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Kişi Sayısı</label>
+                                    @Html.TextBox("kafileKisiSayisi", null, new { @placeholder = "Kişi Sayısı", @class = "form-control", @required = "required", @type = "number" })
+                                    @Html.ValidationMessageFor(model => model.kafileKisiSayisi, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Ülke</label>
+                                    <select class="custom-select form-control" id="kafileUlke" name="kafileUlke">
+                                        <option value="Türkiye">Türkiye</option>
+                                        <option value="Macaristan">Macaristan</option>
+                                        <option value="Finlandiya">Finlandiya</option>
+                                        <option value="Rusya">Rusya</option>
+                                        <option value="Ukrayna">Ukrayna</option>
+                                        <option value="Türkmenistan">Türkmenistan</option>
+                                        <option value="Bulgaristan">Bulgaristan</option>
+                                        <option value="Arnavutluk">Arnavutluk</option>
+                                        <option value="Litvanya">Litvanya</option>
+                                        <option value="Yunanistan">Yunanistan</option>
+                                        <option value="Belçika">Belçika</option>
+                                        <option value="Fransa">Fransa</option>
+                                        <option value="İsveç">İsveç</option>
+                                        <option value="İngiltere">İngiltere</option>
+                                        <option value="İsviçre">İsviçre</option>
+                                        <option value="İtalya">İtalya</option>
+                                        <option value="İzlanda">İzlanda</option>
+                                        <option value="Hollanda">Hollanda</option>
+                                        <option value="Sırbistan">Sırbistan</option>
+                                        <option value="Almanya">Almanya</option>
+                                        <option value="Özbekistan">Özbekistan</option>
+                                        <option value="Suudi Arabistan">Sudi Arabistan</option>
+                                        <option value="Çin">Çin</option>
+                                        <option value="İran">İran</option>
+                                        <option value="Katar">Katar</option>
+                                        <option value="Meksika">Meksika</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+                    <!-- step 1 content end-->
+                    <!-- step 2 -->
+                    <h3>
+                        <span class="mr-2">
+                            <img src="~/frest-admin-v1.0/app-assets/fonts/LivIconsEvo/svg/user.svg" height="70" />
+                        </span>
+                        <span class="icon-title">
+                            <span class="d-block">Turist Bilgileri</span>
+                            <small class="text-muted">Oluşturduğunuz Kafileye Ait Turist Bilgilerini Giriniz.</small>
+                        </span>
+                    </h3>
+                    <!-- step 2 end-->
+                    <!-- step 2 content -->
+                    <fieldset class="pt-0">
+                        @Html.Hidden("turistID")
+                        <h6 class="py-50">Turist Bilgileri</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Ad</label>
+                                    @Html.TextBox("turistAd", null, new { @placeholder = "Ad Giriniz", @class = "form-control", @type = "text", @required = "required" })                                
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Telefon</label>
+                                    @Html.TextBox("turistTel", null, new { @placeholder = "Telefon Giriniz", @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Cinsiyet</label>
+                                    <select class="custom-select form-control" id="turistCinsiyet" name="turistCinsiyet">
+                                        <option value="">------</option>
+                                        <option value="Bay">Bay</option>
+                                        <option value="Bayan">Bayan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Yaş</label>
+                                    @Html.TextBox("turistYas", null, new { @placeholder = "Yaş Giriniz", @class = "form-control", @type = "number" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Kimlik No</label>
+                                    @Html.TextBox("turistTC", null, new { @placeholder = "Kimlik/Sigorta No Giriniz", @class = "form-control", @type = "number" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Pasaport Numarası</label>
+                                    @Html.TextBox("turistPasaportNo", null, new { @placeholder = "Pasaport Numarasını Giriniz", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <a id="addToList" class="btn btn-light-danger btn-md">Ekle</a>
+                            </div>
+                        </div>
+
+                        <table id="turistTable" class="table table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Ad</th>
+                                    <th>Tel</th>
+                                    <th>Cinsiyet</th>
+                                    <th>Yaş</th>
+                                    <th>Kimlik No</th>
+                                    <th>Pasaport No</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </fieldset>
+                    <button id="saveOrder" type="submit" class="btn btn-danger">Kaydet</button>
+                    @*<div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <button id="saveOrder" type="submit" class="btn btn-danger">Kaydet</button>
+                            </div>
+                        </div>*@
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        //TURIST LİST EKLE
+        $("#addToList").click(function (e) {
+            e.preventDefault();
+            if ($.trim($("#turistAd").val()) == "" || $.trim($("#turistTel").val()) == "" || $.trim($("#turistTC").val()) == "") return;
+            var turistAd = $("#turistAd").val(),
+                turistTel = $("#turistTel").val(),
+                turistCinsiyet = $("#turistCinsiyet option:selected").val(),
+                turistYas = $("#turistYas").val(),
+                turistTC = $("#turistTC").val(),
+                turistPasaportNo = $("#turistPasaportNo").val(),
+                turistTableBody = $("#turistTable tbody");
+            var turistItem = '<tr><td>' + turistAd + '</td><td>' + turistTel + '</td><td>' + turistCinsiyet + '</td><td>' + turistYas + '</td><td>' + turistTC + '</td><td>' + turistPasaportNo + '</td><td><a data-turistID="0" href="#" class="deleteTurist">Kaldır</a></td></tr>';
+            turistTableBody.append(turistItem);
+            //alert(timeDiff);
+            clearItem();
+        });
+
+        //TURIST FORMUNU TEMIZLE
+        function clearItem() {
+            $("#turistAd").val('');
+            $("#turistTel").val('');
+            $("#turistCinsiyet").val('');
+            $("#turistYas").val('');
+            $("#turistTC").val('');
+            $("#turistPasaportNo").val('');
+        }
+        //TURIST SİL
+        $(document).on('click', 'a.deleteTurist', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-turistID') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+
+        //VERITABANINA KAYDET
+        function saveOrder(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "/Turist/SaveOrder",
+                data: data,
+                success: function (result) {
+                    swal("Tebrikler", "İşleminiz gerçekleştirilmiştir.", "success");
+                    //location.reload();
+                    location.href = "/Home/Index/"
+                },
+                error: function () {
+                    swal("Hata", "İşleminiz gerçekleştirelememiştir.", "error");
+                }
+            });
+        }
+        $("#saveOrder").click(function (e) {
+            e.preventDefault();
+            var turistArr = [];
+            turistArr.length = 0;
+
+            $.each($("#turistTable tbody tr"), function () {
+                turistArr.push({
+                    turistAd: $(this).find('td:eq(0)').html(),
+                    turistTel: $(this).find('td:eq(1)').html(),
+                    turistCinsiyet: $(this).find('td:eq(2)').html(),
+                    turistYas: $(this).find('td:eq(3)').html(),
+                    turistTC: $(this).find('td:eq(4)').html(),
+                    turistPasaportNo: $(this).find('td:eq(5)').html(),
+                });
+            });
+
+            var data = JSON.stringify({
+                kafileAd: $("#kafileAd").val(),
+                kafileKisiSayisi: $("#kafileKisiSayisi").val(),
+                kafileUlke: $("#kafileUlke option:selected").val(),
+                turID: $("#turID option:selected").val(),
+                turist: turistArr
+            });
+
+            $.when(saveOrder(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+    });
+</script>

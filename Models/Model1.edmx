@@ -1,0 +1,2331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TourModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AltFirma">
+          <Key>
+            <PropertyRef Name="altFirmaID" />
+          </Key>
+          <Property Name="altFirmaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="altFirmaEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="altFirmaSifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="altFirmaAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="altFirmaTel" Type="nvarchar" MaxLength="20" />
+          <Property Name="altFirmaLogo" Type="nvarchar(max)" />
+          <Property Name="altFirmaAdres" Type="nvarchar(max)" />
+          <Property Name="userID" Type="int" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Arac">
+          <Key>
+            <PropertyRef Name="aracID" />
+          </Key>
+          <Property Name="aracID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aracPlaka" Type="nvarchar" MaxLength="8" />
+          <Property Name="aracMarka" Type="nvarchar" MaxLength="50" />
+          <Property Name="aracKapasite" Type="int" />
+          <Property Name="aracDurum" Type="smallint" />
+          <Property Name="aracFiyat" Type="float" />
+          <Property Name="aracFiyatBirim" Type="nvarchar" MaxLength="50" />
+          <Property Name="userID" Type="int" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="AracKot">
+          <Key>
+            <PropertyRef Name="aracKotID" />
+          </Key>
+          <Property Name="aracKotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aracToplamFiyat" Type="float" />
+          <Property Name="aracID" Type="int" />
+          <Property Name="kotasyonID" Type="int" />
+        </EntityType>
+        <EntityType Name="Dil">
+          <Key>
+            <PropertyRef Name="dilID" />
+          </Key>
+          <Property Name="dilID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dilAd" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ekstra">
+          <Key>
+            <PropertyRef Name="ekstraID" />
+          </Key>
+          <Property Name="ekstraID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ekstraAd" Type="nvarchar" MaxLength="100" />
+          <Property Name="ekstraFiyat" Type="float" />
+          <Property Name="ekstraFoto" Type="nvarchar(max)" />
+          <Property Name="ekstraFiyatBirimi" Type="nvarchar" MaxLength="50" />
+          <Property Name="ekstraIl" Type="nvarchar" MaxLength="50" />
+          <Property Name="ekstraIlce" Type="nvarchar" MaxLength="50" />
+          <Property Name="ekstraTelefon" Type="nvarchar" MaxLength="20" />
+          <Property Name="ekstraAdres" Type="nvarchar(max)" />
+          <Property Name="userID" Type="int" />
+        </EntityType>
+        <EntityType Name="EkstraKot">
+          <Key>
+            <PropertyRef Name="ekstraKotID" />
+          </Key>
+          <Property Name="ekstraKotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ekstraTarih" Type="nvarchar" MaxLength="60" />
+          <Property Name="ekstraToplamFiyat" Type="float" />
+          <Property Name="ekstraID" Type="int" />
+          <Property Name="kotasyonID" Type="int" />
+        </EntityType>
+        <EntityType Name="Kafile">
+          <Key>
+            <PropertyRef Name="kafileID" />
+          </Key>
+          <Property Name="kafileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kafileAd" Type="nvarchar" MaxLength="100" />
+          <Property Name="kafileKisiSayisi" Type="int" />
+          <Property Name="kafileUlke" Type="nvarchar" MaxLength="50" />
+          <Property Name="turID" Type="int" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Kotasyon">
+          <Key>
+            <PropertyRef Name="kotasyonID" />
+          </Key>
+          <Property Name="kotasyonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kotasyonAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="kotasyonGunSayisi" Type="int" />
+          <Property Name="kotasyonBas" Type="date" />
+          <Property Name="kotasyonBit" Type="date" />
+          <Property Name="kotasyonGelenUlke" Type="nvarchar" MaxLength="50" />
+          <Property Name="kotasyonGelenSehir" Type="nvarchar" MaxLength="50" />
+          <Property Name="kotasyonKisiSayisi" Type="int" />
+          <Property Name="kotasyonToplamTutar" Type="float" />
+          <Property Name="altFirmaID" Type="int" />
+          <Property Name="onaylanmis" Type="bit" />
+        </EntityType>
+        <EntityType Name="Muze">
+          <Key>
+            <PropertyRef Name="muzeID" />
+          </Key>
+          <Property Name="muzeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="muzeAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="muzeIl" Type="nvarchar" MaxLength="50" />
+          <Property Name="muzeIlce" Type="nvarchar" MaxLength="50" />
+          <Property Name="muzeFoto" Type="nvarchar(max)" />
+          <Property Name="muzeAdres" Type="nvarchar(max)" />
+          <Property Name="muzeGirisFiyat" Type="float" />
+          <Property Name="muzeFiyatBirim" Type="nvarchar" MaxLength="60" />
+          <Property Name="userID" Type="int" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="MuzeKot">
+          <Key>
+            <PropertyRef Name="muzeKotID" />
+          </Key>
+          <Property Name="muzeKotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="muzeTarih" Type="nvarchar" MaxLength="60" />
+          <Property Name="muzeToplamFiyat" Type="float" />
+          <Property Name="muzeID" Type="int" />
+          <Property Name="kotasyonID" Type="int" />
+        </EntityType>
+        <EntityType Name="Otel">
+          <Key>
+            <PropertyRef Name="otelID" />
+          </Key>
+          <Property Name="otelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="otelAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="otelTip" Type="nvarchar" MaxLength="10" />
+          <Property Name="otelTelefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="otelAdres" Type="nvarchar(max)" />
+          <Property Name="otelResim" Type="nvarchar(max)" />
+          <Property Name="otelGecelikFiyat" Type="float" />
+          <Property Name="otelFiyatBirimi" Type="nvarchar" MaxLength="50" />
+          <Property Name="otelSingleRoomFiyat" Type="float" />
+          <Property Name="otelDoubleRoomFiyat" Type="float" />
+          <Property Name="otelKingSuitFiyat" Type="float" />
+          <Property Name="otelFamilyRoomFiyat" Type="float" />
+          <Property Name="otelLat" Type="nvarchar" MaxLength="13" />
+          <Property Name="otelLong" Type="nvarchar" MaxLength="13" />
+          <Property Name="otelIl" Type="nvarchar" MaxLength="50" />
+          <Property Name="otelIlce" Type="nvarchar" MaxLength="50" />
+          <Property Name="userID" Type="int" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="OtelKot">
+          <Key>
+            <PropertyRef Name="otelKotID" />
+          </Key>
+          <Property Name="otelKotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="otelkotTarih" Type="nvarchar" MaxLength="60" />
+          <Property Name="singleKisi" Type="int" />
+          <Property Name="doubleKisi" Type="int" />
+          <Property Name="familyKisi" Type="int" />
+          <Property Name="kingSuitKisi" Type="int" />
+          <Property Name="otelToplamFiyat" Type="float" />
+          <Property Name="otelID" Type="int" />
+          <Property Name="kotasyonID" Type="int" />
+        </EntityType>
+        <EntityType Name="Rehber">
+          <Key>
+            <PropertyRef Name="rehberID" />
+          </Key>
+          <Property Name="rehberID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rehberUsername" Type="nvarchar" MaxLength="50" />
+          <Property Name="rehberPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="rehberAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="rehberTelefon" Type="nvarchar" MaxLength="20" />
+          <Property Name="rehberEmail" Type="nvarchar" MaxLength="50" />
+          <Property Name="rehberPhoto" Type="nvarchar" MaxLength="150" />
+          <Property Name="rehberAdres" Type="nvarchar" MaxLength="120" />
+          <Property Name="rehberCinsiyet" Type="nvarchar" MaxLength="10" />
+          <Property Name="rehberRating" Type="float" />
+          <Property Name="userID" Type="int" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="RehberDil">
+          <Key>
+            <PropertyRef Name="rehberID" />
+            <PropertyRef Name="dilID" />
+          </Key>
+          <Property Name="rehberID" Type="int" Nullable="false" />
+          <Property Name="dilID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ResKot">
+          <Key>
+            <PropertyRef Name="resKotID" />
+          </Key>
+          <Property Name="resKotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reskotTarih" Type="nvarchar" MaxLength="60" />
+          <Property Name="resToplamFiyat" Type="float" />
+          <Property Name="restorantID" Type="int" />
+          <Property Name="kotasyonID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Restorant">
+          <Key>
+            <PropertyRef Name="restorantID" />
+          </Key>
+          <Property Name="restorantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="restorantAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="restorantAdres" Type="nvarchar(max)" />
+          <Property Name="restorantIl" Type="nvarchar" MaxLength="50" />
+          <Property Name="restorantIlce" Type="nvarchar" MaxLength="50" />
+          <Property Name="restorantFoto" Type="nvarchar(max)" />
+          <Property Name="restorantTelefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="restorantKahvaltiFiyat" Type="float" />
+          <Property Name="restorantOglenFiyat" Type="float" />
+          <Property Name="restorantAksamFiyat" Type="float" />
+          <Property Name="restorantOrtalamFiyat" Type="float" />
+          <Property Name="restorantFiyatBirimi" Type="nvarchar" MaxLength="60" />
+          <Property Name="userID" Type="int" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Tur">
+          <Key>
+            <PropertyRef Name="turID" />
+          </Key>
+          <Property Name="turID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="turKod" Type="nvarchar" MaxLength="50" />
+          <Property Name="turAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="turAciklama" Type="nvarchar(max)" />
+          <Property Name="turGunSayisi" Type="int" />
+          <Property Name="turBaslangic" Type="date" />
+          <Property Name="turBitis" Type="date" />
+          <Property Name="turKisiSayisi" Type="int" />
+          <Property Name="turRenk" Type="nchar" MaxLength="10" />
+          <Property Name="isFullDay" Type="bit" />
+          <Property Name="ertelenmis" Type="bit" />
+          <Property Name="turToplamFiyat" Type="float" />
+          <Property Name="rehberID" Type="int" />
+          <Property Name="userID" Type="int" />
+        </EntityType>
+        <EntityType Name="TurArac">
+          <Key>
+            <PropertyRef Name="turAracID" />
+          </Key>
+          <Property Name="turAracID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="turAracToplamFiyat" Type="float" />
+          <Property Name="aracID" Type="int" />
+          <Property Name="turID" Type="int" />
+        </EntityType>
+        <EntityType Name="TurEkstra">
+          <Key>
+            <PropertyRef Name="turEkstraID" />
+          </Key>
+          <Property Name="turEkstraID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="turEkstraTarih" Type="nvarchar" MaxLength="60" />
+          <Property Name="turEkstraToplamFiyat" Type="float" />
+          <Property Name="ekstraID" Type="int" />
+          <Property Name="turID" Type="int" />
+        </EntityType>
+        <EntityType Name="Turist">
+          <Key>
+            <PropertyRef Name="turistID" />
+          </Key>
+          <Property Name="turistID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="turistAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="turistTel" Type="nvarchar" MaxLength="20" />
+          <Property Name="turistFoto" Type="nvarchar(max)" />
+          <Property Name="turistYas" Type="smallint" />
+          <Property Name="turistCinsiyet" Type="nvarchar" MaxLength="20" />
+          <Property Name="turistTC" Type="nvarchar" MaxLength="50" />
+          <Property Name="turistPasaportNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="turistVizeNo" Type="nvarchar" MaxLength="60" />
+          <Property Name="kafileID" Type="int" />
+        </EntityType>
+        <EntityType Name="TurMuze">
+          <Key>
+            <PropertyRef Name="turMuzeID" />
+          </Key>
+          <Property Name="turMuzeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="turMuzeTarih" Type="nvarchar" MaxLength="60" />
+          <Property Name="turMuzeToplamFiyat" Type="float" />
+          <Property Name="muzeID" Type="int" />
+          <Property Name="turID" Type="int" />
+        </EntityType>
+        <EntityType Name="TurOtel">
+          <Key>
+            <PropertyRef Name="turOtelID" />
+          </Key>
+          <Property Name="turOtelID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="turOtelTarih" Type="nvarchar" MaxLength="60" />
+          <Property Name="singleKisi" Type="int" />
+          <Property Name="doubleKisi" Type="int" />
+          <Property Name="familyKisi" Type="int" />
+          <Property Name="kingSuitKisi" Type="int" />
+          <Property Name="otelToplamFiyat" Type="float" />
+          <Property Name="otelID" Type="int" />
+          <Property Name="turID" Type="int" />
+        </EntityType>
+        <EntityType Name="TurRestorant">
+          <Key>
+            <PropertyRef Name="turRestorantID" />
+          </Key>
+          <Property Name="turRestorantID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="turRestorantTarih" Type="nvarchar" MaxLength="60" />
+          <Property Name="turRestorantToplamFiyat" Type="float" />
+          <Property Name="restorantID" Type="int" />
+          <Property Name="turID" Type="int" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="300" />
+          <Property Name="active" Type="bit" />
+          <Property Name="createDate" Type="datetime" />
+          <Property Name="lastLogin" Type="datetime" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+          <Property Name="isim" Type="nvarchar" MaxLength="50" />
+          <Property Name="telefon" Type="nvarchar" MaxLength="15" />
+          <Property Name="adres" Type="nvarchar" MaxLength="200" />
+          <Property Name="userPhoto" Type="nvarchar" MaxLength="300" />
+          <Property Name="userTipID" Type="int" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserTip">
+          <Key>
+            <PropertyRef Name="userTipID" />
+          </Key>
+          <Property Name="userTipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userTipAd" Type="nvarchar" MaxLength="50" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <Association Name="FK_AltFirma_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="AltFirma" Type="Self.AltFirma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="AltFirma">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AracKot_Arac">
+          <End Role="Arac" Type="Self.Arac" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AracKot" Type="Self.AracKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Arac">
+              <PropertyRef Name="aracID" />
+            </Principal>
+            <Dependent Role="AracKot">
+              <PropertyRef Name="aracID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AracKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AracKot" Type="Self.AracKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="AracKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ekstra_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ekstra" Type="Self.Ekstra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Ekstra">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EkstraKot_Ekstra">
+          <End Role="Ekstra" Type="Self.Ekstra" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EkstraKot" Type="Self.EkstraKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ekstra">
+              <PropertyRef Name="ekstraID" />
+            </Principal>
+            <Dependent Role="EkstraKot">
+              <PropertyRef Name="ekstraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EkstraKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EkstraKot" Type="Self.EkstraKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="EkstraKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kafile_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Kafile" Type="Self.Kafile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="Kafile">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kotasyon_AltFirma">
+          <End Role="AltFirma" Type="Self.AltFirma" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AltFirma">
+              <PropertyRef Name="altFirmaID" />
+            </Principal>
+            <Dependent Role="Kotasyon">
+              <PropertyRef Name="altFirmaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Muze_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Muze" Type="Self.Muze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Muze">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MuzeKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MuzeKot" Type="Self.MuzeKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="MuzeKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MuzeKot_Muze">
+          <End Role="Muze" Type="Self.Muze" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MuzeKot" Type="Self.MuzeKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Muze">
+              <PropertyRef Name="muzeID" />
+            </Principal>
+            <Dependent Role="MuzeKot">
+              <PropertyRef Name="muzeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Otel_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Otel" Type="Self.Otel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Otel">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtelKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OtelKot" Type="Self.OtelKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="OtelKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtelKot_Otel">
+          <End Role="Otel" Type="Self.Otel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OtelKot" Type="Self.OtelKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Otel">
+              <PropertyRef Name="otelID" />
+            </Principal>
+            <Dependent Role="OtelKot">
+              <PropertyRef Name="otelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rehber_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Rehber" Type="Self.Rehber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Rehber">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RehberDil_Dil">
+          <End Role="Dil" Type="Self.Dil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RehberDil" Type="Self.RehberDil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dil">
+              <PropertyRef Name="dilID" />
+            </Principal>
+            <Dependent Role="RehberDil">
+              <PropertyRef Name="dilID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RehberDil_Rehber">
+          <End Role="Rehber" Type="Self.Rehber" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="RehberDil" Type="Self.RehberDil" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rehber">
+              <PropertyRef Name="rehberID" />
+            </Principal>
+            <Dependent Role="RehberDil">
+              <PropertyRef Name="rehberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ResKot" Type="Self.ResKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="ResKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResKot_Restorant">
+          <End Role="Restorant" Type="Self.Restorant" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ResKot" Type="Self.ResKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorant">
+              <PropertyRef Name="restorantID" />
+            </Principal>
+            <Dependent Role="ResKot">
+              <PropertyRef Name="restorantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restorant_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Restorant" Type="Self.Restorant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Restorant">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_Rehber">
+          <End Role="Rehber" Type="Self.Rehber" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Tur" Type="Self.Tur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rehber">
+              <PropertyRef Name="rehberID" />
+            </Principal>
+            <Dependent Role="Tur">
+              <PropertyRef Name="rehberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Tur" Type="Self.Tur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Tur">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurArac_Arac">
+          <End Role="Arac" Type="Self.Arac" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurArac" Type="Self.TurArac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Arac">
+              <PropertyRef Name="aracID" />
+            </Principal>
+            <Dependent Role="TurArac">
+              <PropertyRef Name="aracID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurArac_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurArac" Type="Self.TurArac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurArac">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurEkstra_Ekstra">
+          <End Role="Ekstra" Type="Self.Ekstra" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurEkstra" Type="Self.TurEkstra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ekstra">
+              <PropertyRef Name="ekstraID" />
+            </Principal>
+            <Dependent Role="TurEkstra">
+              <PropertyRef Name="ekstraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurEkstra_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurEkstra" Type="Self.TurEkstra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurEkstra">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Turist_Kafile">
+          <End Role="Kafile" Type="Self.Kafile" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Turist" Type="Self.Turist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kafile">
+              <PropertyRef Name="kafileID" />
+            </Principal>
+            <Dependent Role="Turist">
+              <PropertyRef Name="kafileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurMuze_Muze">
+          <End Role="Muze" Type="Self.Muze" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurMuze" Type="Self.TurMuze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Muze">
+              <PropertyRef Name="muzeID" />
+            </Principal>
+            <Dependent Role="TurMuze">
+              <PropertyRef Name="muzeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurMuze_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurMuze" Type="Self.TurMuze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurMuze">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurOtel_Otel">
+          <End Role="Otel" Type="Self.Otel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurOtel" Type="Self.TurOtel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Otel">
+              <PropertyRef Name="otelID" />
+            </Principal>
+            <Dependent Role="TurOtel">
+              <PropertyRef Name="otelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurOtel_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurOtel" Type="Self.TurOtel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurOtel">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurRestorant_Restorant">
+          <End Role="Restorant" Type="Self.Restorant" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurRestorant" Type="Self.TurRestorant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorant">
+              <PropertyRef Name="restorantID" />
+            </Principal>
+            <Dependent Role="TurRestorant">
+              <PropertyRef Name="restorantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurRestorant_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurRestorant" Type="Self.TurRestorant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurRestorant">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserTip">
+          <End Role="UserTip" Type="Self.UserTip" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTip">
+              <PropertyRef Name="userTipID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="userTipID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TourModelStoreContainer">
+          <EntitySet Name="AltFirma" EntityType="Self.AltFirma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Arac" EntityType="Self.Arac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AracKot" EntityType="Self.AracKot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dil" EntityType="Self.Dil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ekstra" EntityType="Self.Ekstra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EkstraKot" EntityType="Self.EkstraKot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kafile" EntityType="Self.Kafile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kotasyon" EntityType="Self.Kotasyon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Muze" EntityType="Self.Muze" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MuzeKot" EntityType="Self.MuzeKot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Otel" EntityType="Self.Otel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OtelKot" EntityType="Self.OtelKot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rehber" EntityType="Self.Rehber" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RehberDil" EntityType="Self.RehberDil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ResKot" EntityType="Self.ResKot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Restorant" EntityType="Self.Restorant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tur" EntityType="Self.Tur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TurArac" EntityType="Self.TurArac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TurEkstra" EntityType="Self.TurEkstra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Turist" EntityType="Self.Turist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TurMuze" EntityType="Self.TurMuze" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TurOtel" EntityType="Self.TurOtel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TurRestorant" EntityType="Self.TurRestorant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTip" EntityType="Self.UserTip" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AltFirma_User" Association="Self.FK_AltFirma_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="AltFirma" EntitySet="AltFirma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AracKot_Arac" Association="Self.FK_AracKot_Arac">
+            <End Role="Arac" EntitySet="Arac" />
+            <End Role="AracKot" EntitySet="AracKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AracKot_Kotasyon" Association="Self.FK_AracKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyon" />
+            <End Role="AracKot" EntitySet="AracKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ekstra_User" Association="Self.FK_Ekstra_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Ekstra" EntitySet="Ekstra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EkstraKot_Ekstra" Association="Self.FK_EkstraKot_Ekstra">
+            <End Role="Ekstra" EntitySet="Ekstra" />
+            <End Role="EkstraKot" EntitySet="EkstraKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EkstraKot_Kotasyon" Association="Self.FK_EkstraKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyon" />
+            <End Role="EkstraKot" EntitySet="EkstraKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kafile_Tur" Association="Self.FK_Kafile_Tur">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="Kafile" EntitySet="Kafile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kotasyon_AltFirma" Association="Self.FK_Kotasyon_AltFirma">
+            <End Role="AltFirma" EntitySet="AltFirma" />
+            <End Role="Kotasyon" EntitySet="Kotasyon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Muze_User" Association="Self.FK_Muze_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Muze" EntitySet="Muze" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MuzeKot_Kotasyon" Association="Self.FK_MuzeKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyon" />
+            <End Role="MuzeKot" EntitySet="MuzeKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MuzeKot_Muze" Association="Self.FK_MuzeKot_Muze">
+            <End Role="Muze" EntitySet="Muze" />
+            <End Role="MuzeKot" EntitySet="MuzeKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Otel_User" Association="Self.FK_Otel_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Otel" EntitySet="Otel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtelKot_Kotasyon" Association="Self.FK_OtelKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyon" />
+            <End Role="OtelKot" EntitySet="OtelKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtelKot_Otel" Association="Self.FK_OtelKot_Otel">
+            <End Role="Otel" EntitySet="Otel" />
+            <End Role="OtelKot" EntitySet="OtelKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rehber_User" Association="Self.FK_Rehber_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Rehber" EntitySet="Rehber" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RehberDil_Dil" Association="Self.FK_RehberDil_Dil">
+            <End Role="Dil" EntitySet="Dil" />
+            <End Role="RehberDil" EntitySet="RehberDil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RehberDil_Rehber" Association="Self.FK_RehberDil_Rehber">
+            <End Role="Rehber" EntitySet="Rehber" />
+            <End Role="RehberDil" EntitySet="RehberDil" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResKot_Kotasyon" Association="Self.FK_ResKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyon" />
+            <End Role="ResKot" EntitySet="ResKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResKot_Restorant" Association="Self.FK_ResKot_Restorant">
+            <End Role="Restorant" EntitySet="Restorant" />
+            <End Role="ResKot" EntitySet="ResKot" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restorant_User" Association="Self.FK_Restorant_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Restorant" EntitySet="Restorant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_Rehber" Association="Self.FK_Tur_Rehber">
+            <End Role="Rehber" EntitySet="Rehber" />
+            <End Role="Tur" EntitySet="Tur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_User" Association="Self.FK_Tur_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Tur" EntitySet="Tur" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurArac_Arac" Association="Self.FK_TurArac_Arac">
+            <End Role="Arac" EntitySet="Arac" />
+            <End Role="TurArac" EntitySet="TurArac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurArac_Tur" Association="Self.FK_TurArac_Tur">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="TurArac" EntitySet="TurArac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurEkstra_Ekstra" Association="Self.FK_TurEkstra_Ekstra">
+            <End Role="Ekstra" EntitySet="Ekstra" />
+            <End Role="TurEkstra" EntitySet="TurEkstra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurEkstra_Tur" Association="Self.FK_TurEkstra_Tur">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="TurEkstra" EntitySet="TurEkstra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Turist_Kafile" Association="Self.FK_Turist_Kafile">
+            <End Role="Kafile" EntitySet="Kafile" />
+            <End Role="Turist" EntitySet="Turist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurMuze_Muze" Association="Self.FK_TurMuze_Muze">
+            <End Role="Muze" EntitySet="Muze" />
+            <End Role="TurMuze" EntitySet="TurMuze" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurMuze_Tur" Association="Self.FK_TurMuze_Tur">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="TurMuze" EntitySet="TurMuze" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurOtel_Otel" Association="Self.FK_TurOtel_Otel">
+            <End Role="Otel" EntitySet="Otel" />
+            <End Role="TurOtel" EntitySet="TurOtel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurOtel_Tur" Association="Self.FK_TurOtel_Tur">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="TurOtel" EntitySet="TurOtel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurRestorant_Restorant" Association="Self.FK_TurRestorant_Restorant">
+            <End Role="Restorant" EntitySet="Restorant" />
+            <End Role="TurRestorant" EntitySet="TurRestorant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurRestorant_Tur" Association="Self.FK_TurRestorant_Tur">
+            <End Role="Tur" EntitySet="Tur" />
+            <End Role="TurRestorant" EntitySet="TurRestorant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserTip" Association="Self.FK_User_UserTip">
+            <End Role="UserTip" EntitySet="UserTip" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TourModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AltFirma">
+          <Key>
+            <PropertyRef Name="altFirmaID" />
+          </Key>
+          <Property Name="altFirmaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="altFirmaEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="altFirmaSifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="altFirmaAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="altFirmaTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="altFirmaLogo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="altFirmaAdres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="Self.FK_AltFirma_User" FromRole="AltFirma" ToRole="User" />
+          <NavigationProperty Name="Kotasyons" Relationship="Self.FK_Kotasyon_AltFirma" FromRole="AltFirma" ToRole="Kotasyon" />
+        </EntityType>
+        <EntityType Name="Arac">
+          <Key>
+            <PropertyRef Name="aracID" />
+          </Key>
+          <Property Name="aracID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aracPlaka" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="aracMarka" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="aracKapasite" Type="Int32" />
+          <Property Name="aracDurum" Type="Int16" />
+          <Property Name="aracFiyat" Type="Double" />
+          <Property Name="aracFiyatBirim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="AracKots" Relationship="Self.FK_AracKot_Arac" FromRole="Arac" ToRole="AracKot" />
+          <NavigationProperty Name="TurAracs" Relationship="Self.FK_TurArac_Arac" FromRole="Arac" ToRole="TurArac" />
+        </EntityType>
+        <EntityType Name="AracKot">
+          <Key>
+            <PropertyRef Name="aracKotID" />
+          </Key>
+          <Property Name="aracKotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aracToplamFiyat" Type="Double" />
+          <Property Name="aracID" Type="Int32" />
+          <Property Name="kotasyonID" Type="Int32" />
+          <NavigationProperty Name="Arac" Relationship="Self.FK_AracKot_Arac" FromRole="AracKot" ToRole="Arac" />
+          <NavigationProperty Name="Kotasyon" Relationship="Self.FK_AracKot_Kotasyon" FromRole="AracKot" ToRole="Kotasyon" />
+        </EntityType>
+        <EntityType Name="Dil">
+          <Key>
+            <PropertyRef Name="dilID" />
+          </Key>
+          <Property Name="dilID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dilAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Rehbers" Relationship="Self.RehberDil" FromRole="Dil" ToRole="Rehber" />
+        </EntityType>
+        <EntityType Name="Ekstra">
+          <Key>
+            <PropertyRef Name="ekstraID" />
+          </Key>
+          <Property Name="ekstraID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ekstraAd" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ekstraFiyat" Type="Double" />
+          <Property Name="ekstraFoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ekstraFiyatBirimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ekstraIl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ekstraIlce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ekstraTelefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ekstraAdres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="userID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Ekstra_User" FromRole="Ekstra" ToRole="User" />
+          <NavigationProperty Name="EkstraKots" Relationship="Self.FK_EkstraKot_Ekstra" FromRole="Ekstra" ToRole="EkstraKot" />
+          <NavigationProperty Name="TurEkstras" Relationship="Self.FK_TurEkstra_Ekstra" FromRole="Ekstra" ToRole="TurEkstra" />
+        </EntityType>
+        <EntityType Name="EkstraKot">
+          <Key>
+            <PropertyRef Name="ekstraKotID" />
+          </Key>
+          <Property Name="ekstraKotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ekstraTarih" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ekstraToplamFiyat" Type="Double" />
+          <Property Name="ekstraID" Type="Int32" />
+          <Property Name="kotasyonID" Type="Int32" />
+          <NavigationProperty Name="Ekstra" Relationship="Self.FK_EkstraKot_Ekstra" FromRole="EkstraKot" ToRole="Ekstra" />
+          <NavigationProperty Name="Kotasyon" Relationship="Self.FK_EkstraKot_Kotasyon" FromRole="EkstraKot" ToRole="Kotasyon" />
+        </EntityType>
+        <EntityType Name="Kotasyon">
+          <Key>
+            <PropertyRef Name="kotasyonID" />
+          </Key>
+          <Property Name="kotasyonID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kotasyonAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kotasyonGunSayisi" Type="Int32" />
+          <Property Name="kotasyonBas" Type="DateTime" Precision="0" />
+          <Property Name="kotasyonBit" Type="DateTime" Precision="0" />
+          <Property Name="kotasyonGelenUlke" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kotasyonGelenSehir" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kotasyonKisiSayisi" Type="Int32" />
+          <Property Name="kotasyonToplamTutar" Type="Double" />
+          <Property Name="altFirmaID" Type="Int32" />
+          <Property Name="onaylanmis" Type="Boolean" />
+          <NavigationProperty Name="AltFirma" Relationship="Self.FK_Kotasyon_AltFirma" FromRole="Kotasyon" ToRole="AltFirma" />
+          <NavigationProperty Name="AracKots" Relationship="Self.FK_AracKot_Kotasyon" FromRole="Kotasyon" ToRole="AracKot" />
+          <NavigationProperty Name="EkstraKots" Relationship="Self.FK_EkstraKot_Kotasyon" FromRole="Kotasyon" ToRole="EkstraKot" />
+          <NavigationProperty Name="MuzeKots" Relationship="Self.FK_MuzeKot_Kotasyon" FromRole="Kotasyon" ToRole="MuzeKot" />
+          <NavigationProperty Name="OtelKots" Relationship="Self.FK_OtelKot_Kotasyon" FromRole="Kotasyon" ToRole="OtelKot" />
+          <NavigationProperty Name="ResKots" Relationship="Self.FK_ResKot_Kotasyon" FromRole="Kotasyon" ToRole="ResKot" />
+        </EntityType>
+        <EntityType Name="Muze">
+          <Key>
+            <PropertyRef Name="muzeID" />
+          </Key>
+          <Property Name="muzeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="muzeAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="muzeIl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="muzeIlce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="muzeFoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="muzeAdres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="muzeGirisFiyat" Type="Double" />
+          <Property Name="muzeFiyatBirim" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Muze_User" FromRole="Muze" ToRole="User" />
+          <NavigationProperty Name="MuzeKots" Relationship="Self.FK_MuzeKot_Muze" FromRole="Muze" ToRole="MuzeKot" />
+          <NavigationProperty Name="TurMuzes" Relationship="Self.FK_TurMuze_Muze" FromRole="Muze" ToRole="TurMuze" />
+        </EntityType>
+        <EntityType Name="MuzeKot">
+          <Key>
+            <PropertyRef Name="muzeKotID" />
+          </Key>
+          <Property Name="muzeKotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="muzeTarih" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="muzeToplamFiyat" Type="Double" />
+          <Property Name="muzeID" Type="Int32" />
+          <Property Name="kotasyonID" Type="Int32" />
+          <NavigationProperty Name="Kotasyon" Relationship="Self.FK_MuzeKot_Kotasyon" FromRole="MuzeKot" ToRole="Kotasyon" />
+          <NavigationProperty Name="Muze" Relationship="Self.FK_MuzeKot_Muze" FromRole="MuzeKot" ToRole="Muze" />
+        </EntityType>
+        <EntityType Name="Otel">
+          <Key>
+            <PropertyRef Name="otelID" />
+          </Key>
+          <Property Name="otelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="otelAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="otelTip" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="otelTelefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="otelAdres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="otelResim" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="otelGecelikFiyat" Type="Double" />
+          <Property Name="otelFiyatBirimi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="otelSingleRoomFiyat" Type="Double" />
+          <Property Name="otelDoubleRoomFiyat" Type="Double" />
+          <Property Name="otelKingSuitFiyat" Type="Double" />
+          <Property Name="otelFamilyRoomFiyat" Type="Double" />
+          <Property Name="otelLat" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="otelLong" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="otelIl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="otelIlce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Otel_User" FromRole="Otel" ToRole="User" />
+          <NavigationProperty Name="OtelKots" Relationship="Self.FK_OtelKot_Otel" FromRole="Otel" ToRole="OtelKot" />
+          <NavigationProperty Name="TurOtels" Relationship="Self.FK_TurOtel_Otel" FromRole="Otel" ToRole="TurOtel" />
+        </EntityType>
+        <EntityType Name="OtelKot">
+          <Key>
+            <PropertyRef Name="otelKotID" />
+          </Key>
+          <Property Name="otelKotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="otelkotTarih" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="singleKisi" Type="Int32" />
+          <Property Name="doubleKisi" Type="Int32" />
+          <Property Name="familyKisi" Type="Int32" />
+          <Property Name="kingSuitKisi" Type="Int32" />
+          <Property Name="otelToplamFiyat" Type="Double" />
+          <Property Name="otelID" Type="Int32" />
+          <Property Name="kotasyonID" Type="Int32" />
+          <NavigationProperty Name="Kotasyon" Relationship="Self.FK_OtelKot_Kotasyon" FromRole="OtelKot" ToRole="Kotasyon" />
+          <NavigationProperty Name="Otel" Relationship="Self.FK_OtelKot_Otel" FromRole="OtelKot" ToRole="Otel" />
+        </EntityType>
+        <EntityType Name="Rehber">
+          <Key>
+            <PropertyRef Name="rehberID" />
+          </Key>
+          <Property Name="rehberID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rehberUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rehberPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rehberAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rehberTelefon" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="rehberEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="rehberPhoto" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="rehberAdres" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="rehberCinsiyet" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="rehberRating" Type="Double" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Rehber_User" FromRole="Rehber" ToRole="User" />
+          <NavigationProperty Name="Dils" Relationship="Self.RehberDil" FromRole="Rehber" ToRole="Dil" />
+          <NavigationProperty Name="Turs" Relationship="TourModel.FK_Tur_Rehber" FromRole="Rehber" ToRole="Tur" />
+        </EntityType>
+        <EntityType Name="ResKot">
+          <Key>
+            <PropertyRef Name="resKotID" />
+          </Key>
+          <Property Name="resKotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reskotTarih" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="resToplamFiyat" Type="Double" />
+          <Property Name="restorantID" Type="Int32" />
+          <Property Name="kotasyonID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kotasyon" Relationship="Self.FK_ResKot_Kotasyon" FromRole="ResKot" ToRole="Kotasyon" />
+          <NavigationProperty Name="Restorant" Relationship="Self.FK_ResKot_Restorant" FromRole="ResKot" ToRole="Restorant" />
+        </EntityType>
+        <EntityType Name="Restorant">
+          <Key>
+            <PropertyRef Name="restorantID" />
+          </Key>
+          <Property Name="restorantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="restorantAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="restorantAdres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="restorantIl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="restorantIlce" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="restorantFoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="restorantTelefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="restorantKahvaltiFiyat" Type="Double" />
+          <Property Name="restorantOglenFiyat" Type="Double" />
+          <Property Name="restorantAksamFiyat" Type="Double" />
+          <Property Name="restorantOrtalamFiyat" Type="Double" />
+          <Property Name="restorantFiyatBirimi" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="ResKots" Relationship="Self.FK_ResKot_Restorant" FromRole="Restorant" ToRole="ResKot" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Restorant_User" FromRole="Restorant" ToRole="User" />
+          <NavigationProperty Name="TurRestorants" Relationship="Self.FK_TurRestorant_Restorant" FromRole="Restorant" ToRole="TurRestorant" />
+        </EntityType>
+        <EntityType Name="Tur">
+          <Key>
+            <PropertyRef Name="turID" />
+          </Key>
+          <Property Name="turID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="turKod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="turAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="turAciklama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="turGunSayisi" Type="Int32" />
+          <Property Name="turBaslangic" Type="DateTime" Precision="0" />
+          <Property Name="turBitis" Type="DateTime" Precision="0" />
+          <Property Name="turKisiSayisi" Type="Int32" />
+          <Property Name="turRenk" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="isFullDay" Type="Boolean" />
+          <Property Name="ertelenmis" Type="Boolean" />
+          <Property Name="turToplamFiyat" Type="Double" />
+          <Property Name="rehberID" Type="Int32" />
+          <Property Name="userID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Tur_User" FromRole="Tur" ToRole="User" />
+          <NavigationProperty Name="TurAracs" Relationship="Self.FK_TurArac_Tur" FromRole="Tur" ToRole="TurArac" />
+          <NavigationProperty Name="TurEkstras" Relationship="Self.FK_TurEkstra_Tur" FromRole="Tur" ToRole="TurEkstra" />
+          <NavigationProperty Name="TurMuzes" Relationship="Self.FK_TurMuze_Tur" FromRole="Tur" ToRole="TurMuze" />
+          <NavigationProperty Name="TurOtels" Relationship="Self.FK_TurOtel_Tur" FromRole="Tur" ToRole="TurOtel" />
+          <NavigationProperty Name="TurRestorants" Relationship="Self.FK_TurRestorant_Tur" FromRole="Tur" ToRole="TurRestorant" />
+          <NavigationProperty Name="Rehber" Relationship="TourModel.FK_Tur_Rehber" FromRole="Tur" ToRole="Rehber" />
+          <NavigationProperty Name="Kafiles" Relationship="TourModel.FK_Kafile_Tur" FromRole="Tur" ToRole="Kafile" />
+        </EntityType>
+        <EntityType Name="TurArac">
+          <Key>
+            <PropertyRef Name="turAracID" />
+          </Key>
+          <Property Name="turAracID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="turAracToplamFiyat" Type="Double" />
+          <Property Name="aracID" Type="Int32" />
+          <Property Name="turID" Type="Int32" />
+          <NavigationProperty Name="Arac" Relationship="Self.FK_TurArac_Arac" FromRole="TurArac" ToRole="Arac" />
+          <NavigationProperty Name="Tur" Relationship="Self.FK_TurArac_Tur" FromRole="TurArac" ToRole="Tur" />
+        </EntityType>
+        <EntityType Name="TurEkstra">
+          <Key>
+            <PropertyRef Name="turEkstraID" />
+          </Key>
+          <Property Name="turEkstraID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="turEkstraTarih" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="turEkstraToplamFiyat" Type="Double" />
+          <Property Name="ekstraID" Type="Int32" />
+          <Property Name="turID" Type="Int32" />
+          <NavigationProperty Name="Ekstra" Relationship="Self.FK_TurEkstra_Ekstra" FromRole="TurEkstra" ToRole="Ekstra" />
+          <NavigationProperty Name="Tur" Relationship="Self.FK_TurEkstra_Tur" FromRole="TurEkstra" ToRole="Tur" />
+        </EntityType>
+        <EntityType Name="TurMuze">
+          <Key>
+            <PropertyRef Name="turMuzeID" />
+          </Key>
+          <Property Name="turMuzeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="turMuzeTarih" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="turMuzeToplamFiyat" Type="Double" />
+          <Property Name="muzeID" Type="Int32" />
+          <Property Name="turID" Type="Int32" />
+          <NavigationProperty Name="Muze" Relationship="Self.FK_TurMuze_Muze" FromRole="TurMuze" ToRole="Muze" />
+          <NavigationProperty Name="Tur" Relationship="Self.FK_TurMuze_Tur" FromRole="TurMuze" ToRole="Tur" />
+        </EntityType>
+        <EntityType Name="TurOtel">
+          <Key>
+            <PropertyRef Name="turOtelID" />
+          </Key>
+          <Property Name="turOtelID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="turOtelTarih" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="singleKisi" Type="Int32" />
+          <Property Name="doubleKisi" Type="Int32" />
+          <Property Name="familyKisi" Type="Int32" />
+          <Property Name="kingSuitKisi" Type="Int32" />
+          <Property Name="otelToplamFiyat" Type="Double" />
+          <Property Name="otelID" Type="Int32" />
+          <Property Name="turID" Type="Int32" />
+          <NavigationProperty Name="Otel" Relationship="Self.FK_TurOtel_Otel" FromRole="TurOtel" ToRole="Otel" />
+          <NavigationProperty Name="Tur" Relationship="Self.FK_TurOtel_Tur" FromRole="TurOtel" ToRole="Tur" />
+        </EntityType>
+        <EntityType Name="TurRestorant">
+          <Key>
+            <PropertyRef Name="turRestorantID" />
+          </Key>
+          <Property Name="turRestorantID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="turRestorantTarih" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="turRestorantToplamFiyat" Type="Double" />
+          <Property Name="restorantID" Type="Int32" />
+          <Property Name="turID" Type="Int32" />
+          <NavigationProperty Name="Restorant" Relationship="Self.FK_TurRestorant_Restorant" FromRole="TurRestorant" ToRole="Restorant" />
+          <NavigationProperty Name="Tur" Relationship="Self.FK_TurRestorant_Tur" FromRole="TurRestorant" ToRole="Tur" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" />
+          <Property Name="createDate" Type="DateTime" Precision="3" />
+          <Property Name="lastLogin" Type="DateTime" Precision="3" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="telefon" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="adres" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="userPhoto" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="userTipID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="AltFirmas" Relationship="Self.FK_AltFirma_User" FromRole="User" ToRole="AltFirma" />
+          <NavigationProperty Name="Ekstras" Relationship="Self.FK_Ekstra_User" FromRole="User" ToRole="Ekstra" />
+          <NavigationProperty Name="Muzes" Relationship="Self.FK_Muze_User" FromRole="User" ToRole="Muze" />
+          <NavigationProperty Name="Otels" Relationship="Self.FK_Otel_User" FromRole="User" ToRole="Otel" />
+          <NavigationProperty Name="Rehbers" Relationship="Self.FK_Rehber_User" FromRole="User" ToRole="Rehber" />
+          <NavigationProperty Name="Restorants" Relationship="Self.FK_Restorant_User" FromRole="User" ToRole="Restorant" />
+          <NavigationProperty Name="Turs" Relationship="Self.FK_Tur_User" FromRole="User" ToRole="Tur" />
+          <NavigationProperty Name="UserTip" Relationship="Self.FK_User_UserTip" FromRole="User" ToRole="UserTip" />
+        </EntityType>
+        <EntityType Name="UserTip">
+          <Key>
+            <PropertyRef Name="userTipID" />
+          </Key>
+          <Property Name="userTipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userTipAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_UserTip" FromRole="UserTip" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_AltFirma_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="AltFirma" Type="Self.AltFirma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="AltFirma">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kotasyon_AltFirma">
+          <End Role="AltFirma" Type="Self.AltFirma" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AltFirma">
+              <PropertyRef Name="altFirmaID" />
+            </Principal>
+            <Dependent Role="Kotasyon">
+              <PropertyRef Name="altFirmaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AracKot_Arac">
+          <End Role="Arac" Type="Self.Arac" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AracKot" Type="Self.AracKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Arac">
+              <PropertyRef Name="aracID" />
+            </Principal>
+            <Dependent Role="AracKot">
+              <PropertyRef Name="aracID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurArac_Arac">
+          <End Role="Arac" Type="Self.Arac" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurArac" Type="Self.TurArac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Arac">
+              <PropertyRef Name="aracID" />
+            </Principal>
+            <Dependent Role="TurArac">
+              <PropertyRef Name="aracID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AracKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AracKot" Type="Self.AracKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="AracKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ekstra_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ekstra" Type="Self.Ekstra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Ekstra">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EkstraKot_Ekstra">
+          <End Role="Ekstra" Type="Self.Ekstra" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EkstraKot" Type="Self.EkstraKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ekstra">
+              <PropertyRef Name="ekstraID" />
+            </Principal>
+            <Dependent Role="EkstraKot">
+              <PropertyRef Name="ekstraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurEkstra_Ekstra">
+          <End Role="Ekstra" Type="Self.Ekstra" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurEkstra" Type="Self.TurEkstra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ekstra">
+              <PropertyRef Name="ekstraID" />
+            </Principal>
+            <Dependent Role="TurEkstra">
+              <PropertyRef Name="ekstraID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EkstraKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EkstraKot" Type="Self.EkstraKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="EkstraKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MuzeKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MuzeKot" Type="Self.MuzeKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="MuzeKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtelKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OtelKot" Type="Self.OtelKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="OtelKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResKot_Kotasyon">
+          <End Role="Kotasyon" Type="Self.Kotasyon" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ResKot" Type="Self.ResKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kotasyon">
+              <PropertyRef Name="kotasyonID" />
+            </Principal>
+            <Dependent Role="ResKot">
+              <PropertyRef Name="kotasyonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Muze_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Muze" Type="Self.Muze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Muze">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MuzeKot_Muze">
+          <End Role="Muze" Type="Self.Muze" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MuzeKot" Type="Self.MuzeKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Muze">
+              <PropertyRef Name="muzeID" />
+            </Principal>
+            <Dependent Role="MuzeKot">
+              <PropertyRef Name="muzeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurMuze_Muze">
+          <End Role="Muze" Type="Self.Muze" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurMuze" Type="Self.TurMuze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Muze">
+              <PropertyRef Name="muzeID" />
+            </Principal>
+            <Dependent Role="TurMuze">
+              <PropertyRef Name="muzeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Otel_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Otel" Type="Self.Otel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Otel">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OtelKot_Otel">
+          <End Role="Otel" Type="Self.Otel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="OtelKot" Type="Self.OtelKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Otel">
+              <PropertyRef Name="otelID" />
+            </Principal>
+            <Dependent Role="OtelKot">
+              <PropertyRef Name="otelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurOtel_Otel">
+          <End Role="Otel" Type="Self.Otel" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurOtel" Type="Self.TurOtel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Otel">
+              <PropertyRef Name="otelID" />
+            </Principal>
+            <Dependent Role="TurOtel">
+              <PropertyRef Name="otelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rehber_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Rehber" Type="Self.Rehber" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Rehber">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResKot_Restorant">
+          <End Role="Restorant" Type="Self.Restorant" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ResKot" Type="Self.ResKot" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorant">
+              <PropertyRef Name="restorantID" />
+            </Principal>
+            <Dependent Role="ResKot">
+              <PropertyRef Name="restorantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Restorant_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Restorant" Type="Self.Restorant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Restorant">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurRestorant_Restorant">
+          <End Role="Restorant" Type="Self.Restorant" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurRestorant" Type="Self.TurRestorant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Restorant">
+              <PropertyRef Name="restorantID" />
+            </Principal>
+            <Dependent Role="TurRestorant">
+              <PropertyRef Name="restorantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tur_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Tur" Type="Self.Tur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Tur">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurArac_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurArac" Type="Self.TurArac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurArac">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurEkstra_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurEkstra" Type="Self.TurEkstra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurEkstra">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurMuze_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurMuze" Type="Self.TurMuze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurMuze">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurOtel_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurOtel" Type="Self.TurOtel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurOtel">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TurRestorant_Tur">
+          <End Role="Tur" Type="Self.Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TurRestorant" Type="Self.TurRestorant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="TurRestorant">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_UserTip">
+          <End Role="UserTip" Type="Self.UserTip" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserTip">
+              <PropertyRef Name="userTipID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="userTipID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RehberDil">
+          <End Role="Dil" Type="Self.Dil" Multiplicity="*" />
+          <End Role="Rehber" Type="Self.Rehber" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TourEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AltFirmas" EntityType="Self.AltFirma" />
+          <EntitySet Name="Aracs" EntityType="Self.Arac" />
+          <EntitySet Name="AracKots" EntityType="Self.AracKot" />
+          <EntitySet Name="Dils" EntityType="Self.Dil" />
+          <EntitySet Name="Ekstras" EntityType="Self.Ekstra" />
+          <EntitySet Name="EkstraKots" EntityType="Self.EkstraKot" />
+          <EntitySet Name="Kotasyons" EntityType="Self.Kotasyon" />
+          <EntitySet Name="Muzes" EntityType="Self.Muze" />
+          <EntitySet Name="MuzeKots" EntityType="Self.MuzeKot" />
+          <EntitySet Name="Otels" EntityType="Self.Otel" />
+          <EntitySet Name="OtelKots" EntityType="Self.OtelKot" />
+          <EntitySet Name="Rehbers" EntityType="Self.Rehber" />
+          <EntitySet Name="ResKots" EntityType="Self.ResKot" />
+          <EntitySet Name="Restorants" EntityType="Self.Restorant" />
+          <EntitySet Name="Turs" EntityType="Self.Tur" />
+          <EntitySet Name="TurAracs" EntityType="Self.TurArac" />
+          <EntitySet Name="TurEkstras" EntityType="Self.TurEkstra" />
+          <EntitySet Name="TurMuzes" EntityType="Self.TurMuze" />
+          <EntitySet Name="TurOtels" EntityType="Self.TurOtel" />
+          <EntitySet Name="TurRestorants" EntityType="Self.TurRestorant" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserTips" EntityType="Self.UserTip" />
+          <AssociationSet Name="FK_AltFirma_User" Association="Self.FK_AltFirma_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="AltFirma" EntitySet="AltFirmas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kotasyon_AltFirma" Association="Self.FK_Kotasyon_AltFirma">
+            <End Role="AltFirma" EntitySet="AltFirmas" />
+            <End Role="Kotasyon" EntitySet="Kotasyons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AracKot_Arac" Association="Self.FK_AracKot_Arac">
+            <End Role="Arac" EntitySet="Aracs" />
+            <End Role="AracKot" EntitySet="AracKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurArac_Arac" Association="Self.FK_TurArac_Arac">
+            <End Role="Arac" EntitySet="Aracs" />
+            <End Role="TurArac" EntitySet="TurAracs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AracKot_Kotasyon" Association="Self.FK_AracKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyons" />
+            <End Role="AracKot" EntitySet="AracKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ekstra_User" Association="Self.FK_Ekstra_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Ekstra" EntitySet="Ekstras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EkstraKot_Ekstra" Association="Self.FK_EkstraKot_Ekstra">
+            <End Role="Ekstra" EntitySet="Ekstras" />
+            <End Role="EkstraKot" EntitySet="EkstraKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurEkstra_Ekstra" Association="Self.FK_TurEkstra_Ekstra">
+            <End Role="Ekstra" EntitySet="Ekstras" />
+            <End Role="TurEkstra" EntitySet="TurEkstras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EkstraKot_Kotasyon" Association="Self.FK_EkstraKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyons" />
+            <End Role="EkstraKot" EntitySet="EkstraKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MuzeKot_Kotasyon" Association="Self.FK_MuzeKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyons" />
+            <End Role="MuzeKot" EntitySet="MuzeKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtelKot_Kotasyon" Association="Self.FK_OtelKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyons" />
+            <End Role="OtelKot" EntitySet="OtelKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResKot_Kotasyon" Association="Self.FK_ResKot_Kotasyon">
+            <End Role="Kotasyon" EntitySet="Kotasyons" />
+            <End Role="ResKot" EntitySet="ResKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Muze_User" Association="Self.FK_Muze_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Muze" EntitySet="Muzes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MuzeKot_Muze" Association="Self.FK_MuzeKot_Muze">
+            <End Role="Muze" EntitySet="Muzes" />
+            <End Role="MuzeKot" EntitySet="MuzeKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurMuze_Muze" Association="Self.FK_TurMuze_Muze">
+            <End Role="Muze" EntitySet="Muzes" />
+            <End Role="TurMuze" EntitySet="TurMuzes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Otel_User" Association="Self.FK_Otel_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Otel" EntitySet="Otels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OtelKot_Otel" Association="Self.FK_OtelKot_Otel">
+            <End Role="Otel" EntitySet="Otels" />
+            <End Role="OtelKot" EntitySet="OtelKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurOtel_Otel" Association="Self.FK_TurOtel_Otel">
+            <End Role="Otel" EntitySet="Otels" />
+            <End Role="TurOtel" EntitySet="TurOtels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rehber_User" Association="Self.FK_Rehber_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Rehber" EntitySet="Rehbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResKot_Restorant" Association="Self.FK_ResKot_Restorant">
+            <End Role="Restorant" EntitySet="Restorants" />
+            <End Role="ResKot" EntitySet="ResKots" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Restorant_User" Association="Self.FK_Restorant_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Restorant" EntitySet="Restorants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurRestorant_Restorant" Association="Self.FK_TurRestorant_Restorant">
+            <End Role="Restorant" EntitySet="Restorants" />
+            <End Role="TurRestorant" EntitySet="TurRestorants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_User" Association="Self.FK_Tur_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Tur" EntitySet="Turs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurArac_Tur" Association="Self.FK_TurArac_Tur">
+            <End Role="Tur" EntitySet="Turs" />
+            <End Role="TurArac" EntitySet="TurAracs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurEkstra_Tur" Association="Self.FK_TurEkstra_Tur">
+            <End Role="Tur" EntitySet="Turs" />
+            <End Role="TurEkstra" EntitySet="TurEkstras" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurMuze_Tur" Association="Self.FK_TurMuze_Tur">
+            <End Role="Tur" EntitySet="Turs" />
+            <End Role="TurMuze" EntitySet="TurMuzes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurOtel_Tur" Association="Self.FK_TurOtel_Tur">
+            <End Role="Tur" EntitySet="Turs" />
+            <End Role="TurOtel" EntitySet="TurOtels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TurRestorant_Tur" Association="Self.FK_TurRestorant_Tur">
+            <End Role="Tur" EntitySet="Turs" />
+            <End Role="TurRestorant" EntitySet="TurRestorants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_UserTip" Association="Self.FK_User_UserTip">
+            <End Role="UserTip" EntitySet="UserTips" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="RehberDil" Association="Self.RehberDil">
+            <End Role="Dil" EntitySet="Dils" />
+            <End Role="Rehber" EntitySet="Rehbers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tur_Rehber" Association="TourModel.FK_Tur_Rehber">
+            <End Role="Rehber" EntitySet="Rehbers" />
+            <End Role="Tur" EntitySet="Turs" />
+          </AssociationSet>
+          <EntitySet Name="Kafiles" EntityType="TourModel.Kafile" />
+          <EntitySet Name="Turists" EntityType="TourModel.Turist" />
+          <AssociationSet Name="FK_Kafile_Tur" Association="TourModel.FK_Kafile_Tur">
+            <End Role="Tur" EntitySet="Turs" />
+            <End Role="Kafile" EntitySet="Kafiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Turist_Kafile" Association="TourModel.FK_Turist_Kafile">
+            <End Role="Kafile" EntitySet="Kafiles" />
+            <End Role="Turist" EntitySet="Turists" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Tur_Rehber">
+          <End Type="TourModel.Rehber" Role="Rehber" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TourModel.Tur" Role="Tur" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rehber">
+              <PropertyRef Name="rehberID" />
+            </Principal>
+            <Dependent Role="Tur">
+              <PropertyRef Name="rehberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Kafile">
+          <Key>
+            <PropertyRef Name="kafileID" />
+          </Key>
+          <Property Name="kafileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kafileAd" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="kafileKisiSayisi" Type="Int32" />
+          <Property Name="kafileUlke" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="turID" Type="Int32" />
+          <Property Name="isDeleted" Type="Boolean" />
+          <NavigationProperty Name="Tur" Relationship="TourModel.FK_Kafile_Tur" FromRole="Kafile" ToRole="Tur" />
+          <NavigationProperty Name="Turists" Relationship="TourModel.FK_Turist_Kafile" FromRole="Kafile" ToRole="Turist" />
+        </EntityType>
+        <EntityType Name="Turist">
+          <Key>
+            <PropertyRef Name="turistID" />
+          </Key>
+          <Property Name="turistID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="turistAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="turistTel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="turistFoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="turistYas" Type="Int16" />
+          <Property Name="turistCinsiyet" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="turistTC" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="turistPasaportNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="turistVizeNo" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="kafileID" Type="Int32" />
+          <NavigationProperty Name="Kafile" Relationship="TourModel.FK_Turist_Kafile" FromRole="Turist" ToRole="Kafile" />
+        </EntityType>
+        <Association Name="FK_Kafile_Tur">
+          <End Type="TourModel.Tur" Role="Tur" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TourModel.Kafile" Role="Kafile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tur">
+              <PropertyRef Name="turID" />
+            </Principal>
+            <Dependent Role="Kafile">
+              <PropertyRef Name="turID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Turist_Kafile">
+          <End Type="TourModel.Kafile" Role="Kafile" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="TourModel.Turist" Role="Turist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kafile">
+              <PropertyRef Name="kafileID" />
+            </Principal>
+            <Dependent Role="Turist">
+              <PropertyRef Name="kafileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TourModelStoreContainer" CdmEntityContainer="TourEntities">
+          <EntitySetMapping Name="AltFirmas">
+            <EntityTypeMapping TypeName="TourModel.AltFirma">
+              <MappingFragment StoreEntitySet="AltFirma">
+                <ScalarProperty Name="altFirmaID" ColumnName="altFirmaID" />
+                <ScalarProperty Name="altFirmaEmail" ColumnName="altFirmaEmail" />
+                <ScalarProperty Name="altFirmaSifre" ColumnName="altFirmaSifre" />
+                <ScalarProperty Name="altFirmaAd" ColumnName="altFirmaAd" />
+                <ScalarProperty Name="altFirmaTel" ColumnName="altFirmaTel" />
+                <ScalarProperty Name="altFirmaLogo" ColumnName="altFirmaLogo" />
+                <ScalarProperty Name="altFirmaAdres" ColumnName="altFirmaAdres" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Aracs">
+            <EntityTypeMapping TypeName="TourModel.Arac">
+              <MappingFragment StoreEntitySet="Arac">
+                <ScalarProperty Name="aracID" ColumnName="aracID" />
+                <ScalarProperty Name="aracPlaka" ColumnName="aracPlaka" />
+                <ScalarProperty Name="aracMarka" ColumnName="aracMarka" />
+                <ScalarProperty Name="aracKapasite" ColumnName="aracKapasite" />
+                <ScalarProperty Name="aracDurum" ColumnName="aracDurum" />
+                <ScalarProperty Name="aracFiyat" ColumnName="aracFiyat" />
+                <ScalarProperty Name="aracFiyatBirim" ColumnName="aracFiyatBirim" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AracKots">
+            <EntityTypeMapping TypeName="TourModel.AracKot">
+              <MappingFragment StoreEntitySet="AracKot">
+                <ScalarProperty Name="aracKotID" ColumnName="aracKotID" />
+                <ScalarProperty Name="aracToplamFiyat" ColumnName="aracToplamFiyat" />
+                <ScalarProperty Name="aracID" ColumnName="aracID" />
+                <ScalarProperty Name="kotasyonID" ColumnName="kotasyonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dils">
+            <EntityTypeMapping TypeName="TourModel.Dil">
+              <MappingFragment StoreEntitySet="Dil">
+                <ScalarProperty Name="dilID" ColumnName="dilID" />
+                <ScalarProperty Name="dilAd" ColumnName="dilAd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ekstras">
+            <EntityTypeMapping TypeName="TourModel.Ekstra">
+              <MappingFragment StoreEntitySet="Ekstra">
+                <ScalarProperty Name="ekstraID" ColumnName="ekstraID" />
+                <ScalarProperty Name="ekstraAd" ColumnName="ekstraAd" />
+                <ScalarProperty Name="ekstraFiyat" ColumnName="ekstraFiyat" />
+                <ScalarProperty Name="ekstraFoto" ColumnName="ekstraFoto" />
+                <ScalarProperty Name="ekstraFiyatBirimi" ColumnName="ekstraFiyatBirimi" />
+                <ScalarProperty Name="ekstraIl" ColumnName="ekstraIl" />
+                <ScalarProperty Name="ekstraIlce" ColumnName="ekstraIlce" />
+                <ScalarProperty Name="ekstraTelefon" ColumnName="ekstraTelefon" />
+                <ScalarProperty Name="ekstraAdres" ColumnName="ekstraAdres" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EkstraKots">
+            <EntityTypeMapping TypeName="TourModel.EkstraKot">
+              <MappingFragment StoreEntitySet="EkstraKot">
+                <ScalarProperty Name="ekstraKotID" ColumnName="ekstraKotID" />
+                <ScalarProperty Name="ekstraTarih" ColumnName="ekstraTarih" />
+                <ScalarProperty Name="ekstraToplamFiyat" ColumnName="ekstraToplamFiyat" />
+                <ScalarProperty Name="ekstraID" ColumnName="ekstraID" />
+                <ScalarProperty Name="kotasyonID" ColumnName="kotasyonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kotasyons">
+            <EntityTypeMapping TypeName="TourModel.Kotasyon">
+              <MappingFragment StoreEntitySet="Kotasyon">
+                <ScalarProperty Name="kotasyonID" ColumnName="kotasyonID" />
+                <ScalarProperty Name="kotasyonAd" ColumnName="kotasyonAd" />
+                <ScalarProperty Name="kotasyonGunSayisi" ColumnName="kotasyonGunSayisi" />
+                <ScalarProperty Name="kotasyonBas" ColumnName="kotasyonBas" />
+                <ScalarProperty Name="kotasyonBit" ColumnName="kotasyonBit" />
+                <ScalarProperty Name="kotasyonGelenUlke" ColumnName="kotasyonGelenUlke" />
+                <ScalarProperty Name="kotasyonGelenSehir" ColumnName="kotasyonGelenSehir" />
+                <ScalarProperty Name="kotasyonKisiSayisi" ColumnName="kotasyonKisiSayisi" />
+                <ScalarProperty Name="kotasyonToplamTutar" ColumnName="kotasyonToplamTutar" />
+                <ScalarProperty Name="altFirmaID" ColumnName="altFirmaID" />
+                <ScalarProperty Name="onaylanmis" ColumnName="onaylanmis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Muzes">
+            <EntityTypeMapping TypeName="TourModel.Muze">
+              <MappingFragment StoreEntitySet="Muze">
+                <ScalarProperty Name="muzeID" ColumnName="muzeID" />
+                <ScalarProperty Name="muzeAd" ColumnName="muzeAd" />
+                <ScalarProperty Name="muzeIl" ColumnName="muzeIl" />
+                <ScalarProperty Name="muzeIlce" ColumnName="muzeIlce" />
+                <ScalarProperty Name="muzeFoto" ColumnName="muzeFoto" />
+                <ScalarProperty Name="muzeAdres" ColumnName="muzeAdres" />
+                <ScalarProperty Name="muzeGirisFiyat" ColumnName="muzeGirisFiyat" />
+                <ScalarProperty Name="muzeFiyatBirim" ColumnName="muzeFiyatBirim" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MuzeKots">
+            <EntityTypeMapping TypeName="TourModel.MuzeKot">
+              <MappingFragment StoreEntitySet="MuzeKot">
+                <ScalarProperty Name="muzeKotID" ColumnName="muzeKotID" />
+                <ScalarProperty Name="muzeTarih" ColumnName="muzeTarih" />
+                <ScalarProperty Name="muzeToplamFiyat" ColumnName="muzeToplamFiyat" />
+                <ScalarProperty Name="muzeID" ColumnName="muzeID" />
+                <ScalarProperty Name="kotasyonID" ColumnName="kotasyonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Otels">
+            <EntityTypeMapping TypeName="TourModel.Otel">
+              <MappingFragment StoreEntitySet="Otel">
+                <ScalarProperty Name="otelID" ColumnName="otelID" />
+                <ScalarProperty Name="otelAd" ColumnName="otelAd" />
+                <ScalarProperty Name="otelTip" ColumnName="otelTip" />
+                <ScalarProperty Name="otelTelefon" ColumnName="otelTelefon" />
+                <ScalarProperty Name="otelAdres" ColumnName="otelAdres" />
+                <ScalarProperty Name="otelResim" ColumnName="otelResim" />
+                <ScalarProperty Name="otelGecelikFiyat" ColumnName="otelGecelikFiyat" />
+                <ScalarProperty Name="otelFiyatBirimi" ColumnName="otelFiyatBirimi" />
+                <ScalarProperty Name="otelSingleRoomFiyat" ColumnName="otelSingleRoomFiyat" />
+                <ScalarProperty Name="otelDoubleRoomFiyat" ColumnName="otelDoubleRoomFiyat" />
+                <ScalarProperty Name="otelKingSuitFiyat" ColumnName="otelKingSuitFiyat" />
+                <ScalarProperty Name="otelFamilyRoomFiyat" ColumnName="otelFamilyRoomFiyat" />
+                <ScalarProperty Name="otelLat" ColumnName="otelLat" />
+                <ScalarProperty Name="otelLong" ColumnName="otelLong" />
+                <ScalarProperty Name="otelIl" ColumnName="otelIl" />
+                <ScalarProperty Name="otelIlce" ColumnName="otelIlce" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OtelKots">
+            <EntityTypeMapping TypeName="TourModel.OtelKot">
+              <MappingFragment StoreEntitySet="OtelKot">
+                <ScalarProperty Name="otelKotID" ColumnName="otelKotID" />
+                <ScalarProperty Name="otelkotTarih" ColumnName="otelkotTarih" />
+                <ScalarProperty Name="singleKisi" ColumnName="singleKisi" />
+                <ScalarProperty Name="doubleKisi" ColumnName="doubleKisi" />
+                <ScalarProperty Name="familyKisi" ColumnName="familyKisi" />
+                <ScalarProperty Name="kingSuitKisi" ColumnName="kingSuitKisi" />
+                <ScalarProperty Name="otelToplamFiyat" ColumnName="otelToplamFiyat" />
+                <ScalarProperty Name="otelID" ColumnName="otelID" />
+                <ScalarProperty Name="kotasyonID" ColumnName="kotasyonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rehbers">
+            <EntityTypeMapping TypeName="TourModel.Rehber">
+              <MappingFragment StoreEntitySet="Rehber">
+                <ScalarProperty Name="rehberID" ColumnName="rehberID" />
+                <ScalarProperty Name="rehberUsername" ColumnName="rehberUsername" />
+                <ScalarProperty Name="rehberPassword" ColumnName="rehberPassword" />
+                <ScalarProperty Name="rehberAd" ColumnName="rehberAd" />
+                <ScalarProperty Name="rehberTelefon" ColumnName="rehberTelefon" />
+                <ScalarProperty Name="rehberEmail" ColumnName="rehberEmail" />
+                <ScalarProperty Name="rehberPhoto" ColumnName="rehberPhoto" />
+                <ScalarProperty Name="rehberAdres" ColumnName="rehberAdres" />
+                <ScalarProperty Name="rehberCinsiyet" ColumnName="rehberCinsiyet" />
+                <ScalarProperty Name="rehberRating" ColumnName="rehberRating" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ResKots">
+            <EntityTypeMapping TypeName="TourModel.ResKot">
+              <MappingFragment StoreEntitySet="ResKot">
+                <ScalarProperty Name="resKotID" ColumnName="resKotID" />
+                <ScalarProperty Name="reskotTarih" ColumnName="reskotTarih" />
+                <ScalarProperty Name="resToplamFiyat" ColumnName="resToplamFiyat" />
+                <ScalarProperty Name="restorantID" ColumnName="restorantID" />
+                <ScalarProperty Name="kotasyonID" ColumnName="kotasyonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Restorants">
+            <EntityTypeMapping TypeName="TourModel.Restorant">
+              <MappingFragment StoreEntitySet="Restorant">
+                <ScalarProperty Name="restorantID" ColumnName="restorantID" />
+                <ScalarProperty Name="restorantAd" ColumnName="restorantAd" />
+                <ScalarProperty Name="restorantAdres" ColumnName="restorantAdres" />
+                <ScalarProperty Name="restorantIl" ColumnName="restorantIl" />
+                <ScalarProperty Name="restorantIlce" ColumnName="restorantIlce" />
+                <ScalarProperty Name="restorantFoto" ColumnName="restorantFoto" />
+                <ScalarProperty Name="restorantTelefon" ColumnName="restorantTelefon" />
+                <ScalarProperty Name="restorantKahvaltiFiyat" ColumnName="restorantKahvaltiFiyat" />
+                <ScalarProperty Name="restorantOglenFiyat" ColumnName="restorantOglenFiyat" />
+                <ScalarProperty Name="restorantAksamFiyat" ColumnName="restorantAksamFiyat" />
+                <ScalarProperty Name="restorantOrtalamFiyat" ColumnName="restorantOrtalamFiyat" />
+                <ScalarProperty Name="restorantFiyatBirimi" ColumnName="restorantFiyatBirimi" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turs">
+            <EntityTypeMapping TypeName="TourModel.Tur">
+              <MappingFragment StoreEntitySet="Tur">
+                <ScalarProperty Name="turID" ColumnName="turID" />
+                <ScalarProperty Name="turKod" ColumnName="turKod" />
+                <ScalarProperty Name="turAd" ColumnName="turAd" />
+                <ScalarProperty Name="turAciklama" ColumnName="turAciklama" />
+                <ScalarProperty Name="turGunSayisi" ColumnName="turGunSayisi" />
+                <ScalarProperty Name="turBaslangic" ColumnName="turBaslangic" />
+                <ScalarProperty Name="turBitis" ColumnName="turBitis" />
+                <ScalarProperty Name="turKisiSayisi" ColumnName="turKisiSayisi" />
+                <ScalarProperty Name="turRenk" ColumnName="turRenk" />
+                <ScalarProperty Name="isFullDay" ColumnName="isFullDay" />
+                <ScalarProperty Name="ertelenmis" ColumnName="ertelenmis" />
+                <ScalarProperty Name="turToplamFiyat" ColumnName="turToplamFiyat" />
+                <ScalarProperty Name="rehberID" ColumnName="rehberID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TurAracs">
+            <EntityTypeMapping TypeName="TourModel.TurArac">
+              <MappingFragment StoreEntitySet="TurArac">
+                <ScalarProperty Name="turAracID" ColumnName="turAracID" />
+                <ScalarProperty Name="turAracToplamFiyat" ColumnName="turAracToplamFiyat" />
+                <ScalarProperty Name="aracID" ColumnName="aracID" />
+                <ScalarProperty Name="turID" ColumnName="turID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TurEkstras">
+            <EntityTypeMapping TypeName="TourModel.TurEkstra">
+              <MappingFragment StoreEntitySet="TurEkstra">
+                <ScalarProperty Name="turEkstraID" ColumnName="turEkstraID" />
+                <ScalarProperty Name="turEkstraTarih" ColumnName="turEkstraTarih" />
+                <ScalarProperty Name="turEkstraToplamFiyat" ColumnName="turEkstraToplamFiyat" />
+                <ScalarProperty Name="ekstraID" ColumnName="ekstraID" />
+                <ScalarProperty Name="turID" ColumnName="turID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TurMuzes">
+            <EntityTypeMapping TypeName="TourModel.TurMuze">
+              <MappingFragment StoreEntitySet="TurMuze">
+                <ScalarProperty Name="turMuzeID" ColumnName="turMuzeID" />
+                <ScalarProperty Name="turMuzeTarih" ColumnName="turMuzeTarih" />
+                <ScalarProperty Name="turMuzeToplamFiyat" ColumnName="turMuzeToplamFiyat" />
+                <ScalarProperty Name="muzeID" ColumnName="muzeID" />
+                <ScalarProperty Name="turID" ColumnName="turID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TurOtels">
+            <EntityTypeMapping TypeName="TourModel.TurOtel">
+              <MappingFragment StoreEntitySet="TurOtel">
+                <ScalarProperty Name="turOtelID" ColumnName="turOtelID" />
+                <ScalarProperty Name="turOtelTarih" ColumnName="turOtelTarih" />
+                <ScalarProperty Name="singleKisi" ColumnName="singleKisi" />
+                <ScalarProperty Name="doubleKisi" ColumnName="doubleKisi" />
+                <ScalarProperty Name="familyKisi" ColumnName="familyKisi" />
+                <ScalarProperty Name="kingSuitKisi" ColumnName="kingSuitKisi" />
+                <ScalarProperty Name="otelToplamFiyat" ColumnName="otelToplamFiyat" />
+                <ScalarProperty Name="otelID" ColumnName="otelID" />
+                <ScalarProperty Name="turID" ColumnName="turID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TurRestorants">
+            <EntityTypeMapping TypeName="TourModel.TurRestorant">
+              <MappingFragment StoreEntitySet="TurRestorant">
+                <ScalarProperty Name="turRestorantID" ColumnName="turRestorantID" />
+                <ScalarProperty Name="turRestorantTarih" ColumnName="turRestorantTarih" />
+                <ScalarProperty Name="turRestorantToplamFiyat" ColumnName="turRestorantToplamFiyat" />
+                <ScalarProperty Name="restorantID" ColumnName="restorantID" />
+                <ScalarProperty Name="turID" ColumnName="turID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TourModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="createDate" ColumnName="createDate" />
+                <ScalarProperty Name="lastLogin" ColumnName="lastLogin" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="isim" ColumnName="isim" />
+                <ScalarProperty Name="telefon" ColumnName="telefon" />
+                <ScalarProperty Name="adres" ColumnName="adres" />
+                <ScalarProperty Name="userPhoto" ColumnName="userPhoto" />
+                <ScalarProperty Name="userTipID" ColumnName="userTipID" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTips">
+            <EntityTypeMapping TypeName="TourModel.UserTip">
+              <MappingFragment StoreEntitySet="UserTip">
+                <ScalarProperty Name="userTipID" ColumnName="userTipID" />
+                <ScalarProperty Name="userTipAd" ColumnName="userTipAd" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="RehberDil" TypeName="TourModel.RehberDil" StoreEntitySet="RehberDil">
+            <EndProperty Name="Dil">
+              <ScalarProperty Name="dilID" ColumnName="dilID" />
+            </EndProperty>
+            <EndProperty Name="Rehber">
+              <ScalarProperty Name="rehberID" ColumnName="rehberID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Kafiles">
+            <EntityTypeMapping TypeName="TourModel.Kafile">
+              <MappingFragment StoreEntitySet="Kafile">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="turID" ColumnName="turID" />
+                <ScalarProperty Name="kafileUlke" ColumnName="kafileUlke" />
+                <ScalarProperty Name="kafileKisiSayisi" ColumnName="kafileKisiSayisi" />
+                <ScalarProperty Name="kafileAd" ColumnName="kafileAd" />
+                <ScalarProperty Name="kafileID" ColumnName="kafileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turists">
+            <EntityTypeMapping TypeName="TourModel.Turist">
+              <MappingFragment StoreEntitySet="Turist">
+                <ScalarProperty Name="kafileID" ColumnName="kafileID" />
+                <ScalarProperty Name="turistVizeNo" ColumnName="turistVizeNo" />
+                <ScalarProperty Name="turistPasaportNo" ColumnName="turistPasaportNo" />
+                <ScalarProperty Name="turistTC" ColumnName="turistTC" />
+                <ScalarProperty Name="turistCinsiyet" ColumnName="turistCinsiyet" />
+                <ScalarProperty Name="turistYas" ColumnName="turistYas" />
+                <ScalarProperty Name="turistFoto" ColumnName="turistFoto" />
+                <ScalarProperty Name="turistTel" ColumnName="turistTel" />
+                <ScalarProperty Name="turistAd" ColumnName="turistAd" />
+                <ScalarProperty Name="turistID" ColumnName="turistID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

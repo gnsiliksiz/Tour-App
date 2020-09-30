@@ -1,0 +1,761 @@
+﻿@model TourApp.Models.Tur
+@{
+    ViewBag.Title = "CreateTur";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<section id="info-tabs-">
+    <div class="row">
+        <div class="col-12">
+            <div class="card icon-tab">
+                <div class="card-header">
+                    <h4 class="card-title">Kotasyon Bilgilerini Giriniz</h4>
+                </div>
+                <div class="card-content mt-2">
+                    <div class="card-body">
+                        <form id="NewOrderForm" class="wizard-horizontal">
+                            @Html.Hidden("turID")
+                            <!--STEP 1-->
+                            <h6>
+                                <i class="step-icon"></i>
+                                <span class="fonticon-wrap">
+                                    <i class="livicon-evo" data-options="name:user.svg; size: 50px; style:lines; strokeColor:#adb5bd;"></i>
+                                </span>
+                                <span>Tur Tanımı</span>
+                            </h6>
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="py-50">Genel Bilgiler</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Tur Kodu</label>
+                                            @Html.TextBox("turKod", null, new { @placeholder = "Tur Kodunu Giriniz", @class = "form-control required", })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Tur Adı</label>
+                                            @Html.TextBox("turAd", null, new { @placeholder = "Tur Adını Giriniz", @class = "form-control required", })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Kişi Sayısı</label>
+                                            @Html.TextBox("turKisiSayisi", null, new { @placeholder = "Kişi Sayısı", @class = "form-control required", @type = "number" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Renk Seçiniz</label>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                @Html.TextBox("turRenk", null, new { @placeholder = "Renk Girin", @class = "form-control", @type = "color" })
+                                                <div class="form-control-position">
+                                                    <i class='bx bx-palette'></i>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Açıklama</label>
+                                            @Html.TextBox("turAciklama", null, new { @placeholder = "Açıklama Giriniz", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Başlangıc Tarihi</label>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                @Html.TextBox("turGunSayisi", null, new { @placeholder = "Kaç Gün", @class = "form-control", @required = true, @type = "number" })
+                                                <div class="form-control-position">
+                                                    <i class='bx bx-calendar'></i>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Başlangıc Tarihi</label>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                @Html.TextBox("turBaslangic", null, new { @placeholder = "Tarih Seçin", @class = "form-control format-picker required", @required = true })
+                                                <div class="form-control-position">
+                                                    <i class='bx bx-calendar'></i>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Bitiş Tarihi</label>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                @Html.TextBox("turBitis", null, new { @placeholder = "Tarih Seçin", @class = "form-control format-picker required", @required = true })
+                                                <div class="form-control-position">
+                                                    <i class='bx bx-calendar'></i>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Rehberi Seçiniz</label>
+                                            @Html.DropDownList("RehberList", null, htmlAttributes: new { @class = "form-control", @id = "RehberList", @name = "RehberList" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </fieldset>
+
+                            <!-- STEP 2-->
+                            <h6>
+                                <i class="step-icon"></i>
+                                <span class="fonticon-wrap">
+                                    <i class="livicon-evo" data-options="name:briefcase.svg; size: 50px; style:lines; strokeColor:#adb5bd;"></i>
+                                </span>
+                                <span>Otel Bilgileri</span>
+                            </h6>
+
+                            <fieldset>
+                                @Html.Hidden("turOtelID")
+
+                                <input type="hidden" id="single">
+                                <input type="hidden" id="double">
+                                <input type="hidden" id="family">
+                                <input type="hidden" id="king">
+                                <input type="hidden" id="otelBirim">
+                                <input type="hidden" id="muze">
+                                <input type="hidden" id="muzeBirim">
+                                <input type="hidden" id="restorant">
+                                <input type="hidden" id="restorantBirim">
+                                <input type="hidden" id="ekstra">
+                                <input type="hidden" id="ekstraBirim">
+                                <input type="hidden" id="arac">
+                                <input type="hidden" id="aracBirim">
+                                       
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h6 class="py-50">Otel Bilgilerini Giriniz</h6>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Oteli Seçiniz</label>
+                                            @Html.DropDownList("OtelList", null, htmlAttributes: new { @class = "form-control", @id = "OtelList", @name = "OtelList" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Zaman Aralığı</label>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                @Html.TextBox("turOtelTarih", null, new { @placeholder = "Tarih Seçin", @class = "form-control timeseconds" })
+                                                <div class="form-control-position">
+                                                    <i class='bx bx-calendar'></i>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Tek Kişilik Oda</label>
+                                            @Html.TextBox("singleKisi", null, new { @placeholder = "Tek Kişilik Oda", @class = "form-control", @type = "number" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Çift Kişilik Oda</label>
+                                            @Html.TextBox("doubleKisi", null, new { @placeholder = "Çift Kişilik Oda", @class = "form-control", @type = "number" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Aile Odası</label>
+                                            @Html.TextBox("familyKisi", null, new { @placeholder = "Family Room", @class = "form-control", @type = "number" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>King Suit</label>
+                                            @Html.TextBox("kingSuitKisi", null, new { @placeholder = "King Suit Sayısı", @class = "form-control", @type = "number" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div id="divPartialView">
+                                                @Html.Action("GetOtel", "Kotasyon")
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 col-lg-offset-4">
+                                        <a id="addToList" class="btn btn-info">Listeye Ekle</a>
+                                    </div>
+                                    <table id="otelTable" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Otel</th>
+                                                <th>Tarih</th>
+                                                <th>Single Room</th>
+                                                <th>Double Room</th>
+                                                <th>Family Room</th>
+                                                <th>King Suit Room</th>
+                                                <th>Toplam Fiyat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </fieldset>
+                            <!-- STEP 3-->
+                            <h6>
+                                <i class="step-icon"></i>
+                                <span class="fonticon-wrap">
+                                    <i class="livicon-evo" data-options="name:briefcase.svg; size: 50px; style:lines; strokeColor:#adb5bd;"></i>
+                                </span>
+                                <span>Müze Bilgileri</span>
+                            </h6>
+                            @Html.Hidden("turMuzeID")
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName3">Müze İsmi</label>
+                                            @Html.DropDownList("MuzeList", null, htmlAttributes: new { @class = "form-control", @id = "MuzeList", @name = "MuzeList" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="lastName3">Last Name</label>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                @Html.TextBox("turMuzeTarih", null, new { @placeholder = "Tarih Seçin", @class = "form-control timeseconds" })
+                                                <div class="form-control-position">
+                                                    <i class='bx bx-calendar'></i>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-lg-offset-4">
+                                    <a id="addToListMuze" class="btn btn-info">Listeye Ekle</a>
+                                </div>
+                                <table id="muzeTable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Müze</th>
+                                            <th>Tarih</th>
+                                            <th>Toplam</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </fieldset>
+
+                            <!-- STEP 4-->
+                            <h6>
+                                <i class="step-icon"></i>
+                                <span class="fonticon-wrap">
+                                    <i class="livicon-evo" data-options="name:briefcase.svg; size: 50px; style:lines; strokeColor:#adb5bd;"></i>
+                                </span>
+                                <span>Restorant Bilgileri</span>
+                            </h6>
+                            @Html.Hidden("turRestorantID")
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName3">Restorant İsmi</label>
+                                            @Html.DropDownList("RestorantList", null, htmlAttributes: new { @class = "form-control", @id = "RestorantList", @name = "RestorantList" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="lastName3">Last Name</label>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                @Html.TextBox("turRestorantTarih", null, new { @placeholder = "Tarih Seçin", @class = "form-control timeseconds" })
+                                                <div class="form-control-position">
+                                                    <i class='bx bx-calendar'></i>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.Hidden("turRestorantToplamFiyat")
+                                <div class="col-md-2 col-lg-offset-4">
+                                    <a id="addToListRestorant" class="btn btn-info">Listeye Ekle</a>
+                                </div>
+                                <table id="restorantTable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Restorant</th>
+                                            <th>Tarih</th>
+                                            <th>Toplam</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </fieldset>
+                            <!-- STEP 5-->
+                            <h6>
+                                <i class="step-icon"></i>
+                                <span class="fonticon-wrap">
+                                    <i class="livicon-evo" data-options="name:briefcase.svg; size: 50px; style:lines; strokeColor:#adb5bd;"></i>
+                                </span>
+                                <span>Diğer Mekanlar</span>
+                            </h6>
+                            @Html.Hidden("turEkstraID")
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName3">Restorant İsmi</label>
+                                            @Html.DropDownList("EkstraList", null, htmlAttributes: new { @class = "form-control", @id = "EkstraList", @name = "EkstraList" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="lastName3">Last Name</label>
+                                            <fieldset class="form-group position-relative has-icon-left">
+                                                @Html.TextBox("turEkstraTarih", null, new { @placeholder = "Tarih Seçin", @class = "form-control timeseconds" })
+                                                <div class="form-control-position">
+                                                    <i class='bx bx-calendar'></i>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.Hidden("turEkstraToplamFiyat")
+                                <div class="col-md-2 col-lg-offset-4">
+                                    <a id="addToListEkstra" class="btn btn-info">Listeye Ekle</a>
+                                </div>
+
+                                <table id="ekstraTable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Etkinlik</th>
+                                            <th>Tarih</th>
+                                            <th>Toplam</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </fieldset>
+                            <!--STEP 6-->
+                            <h6>
+                                <i class="step-icon"></i>
+                                <span class="fonticon-wrap">
+                                    <i class="livicon-evo" data-options="name:briefcase.svg; size: 50px; style:lines; strokeColor:#adb5bd;"></i>
+                                </span>
+                                <span>Araç Seçiniz</span>
+                            </h6>
+                            @Html.Hidden("turAracID")
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="firstName3">Restorant İsmi</label>
+                                            @Html.DropDownList("AracList", null, htmlAttributes: new { @class = "form-control", @id = "AracList", @name = "AracList" })
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.Hidden("turAracToplamFiyat")
+                                <div class="col-md-2 col-lg-offset-4">
+                                    <a id="addToArac" class="btn btn-info">Listeye Ekle</a>
+                                </div>
+
+                                <table id="aracTable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Arac</th>
+                                            <th>Toplam Fiyat</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </fieldset>
+                            <button id="saveOrder" type="submit" class="btn btn-danger">Kaydet</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //OTEL LİST EKLE
+        $("#addToList").click(function (e) {
+            e.preventDefault();
+            if ($.trim($("#OtelList").val()) == "" || $.trim($("#turOtelTarih").val()) == "" || $.trim($("#singleKisi").val()) == "") return;
+            var OtelList = $('#OtelList option:selected').text();
+            var otelID = $("#OtelList option:selected").val(),
+                turOtelTarih = $("#turOtelTarih").val(),
+
+                gunBaslangic = turOtelTarih.substring(0, 10),
+                gunBitis = turOtelTarih.substring(21, 31),
+                basdate = new Date(Date.parse(gunBaslangic)).getDate(),
+                bitdate = new Date(Date.parse(gunBitis)).getDate(),
+                timeDiff = Math.abs(bitdate - basdate);
+
+                singleKisi = $("#singleKisi").val(),
+                singlefiyat = $("#single").val(),
+                doublefiyat = $("#double").val(),
+                familyfiyat = $("#family").val(),
+                kingfiyat = $("#king").val(),
+                otelBirim = $("#otelBirim").val(),
+                doubleKisi = $("#doubleKisi").val(),
+                familyKisi = $("#familyKisi").val(),
+                kingSuitKisi = $("#kingSuitKisi").val(),
+                otelToplamFiyat = ((singleKisi * singlefiyat) + (doubleKisi * doublefiyat) + (familyKisi * familyfiyat) + (kingSuitKisi * kingfiyat)) * timeDiff,
+                otelTableBody = $("#otelTable tbody");
+            //alert(singleHesap + " " + doubleHesap + " " + familyHesap + " " + kingHesap + "Toplam:" + otelToplamFiyat);
+            var otelItem = '<tr><td>' + otelID + '</td><td>' + OtelList + '</td><td>' + turOtelTarih.format("MMMM dd") + '</td><td>' + singleKisi + '</td><td>' + doubleKisi + '</td><td>' + familyKisi + '</td><td>' + kingSuitKisi + '</td><td><span class="text text-success">' + otelToplamFiyat +'</span></td><td><a data-otelID="0" href="#" class="deleteOtel">Kaldır</a></td></tr>';
+            otelTableBody.append(otelItem);
+            clearItem();
+        });
+        //MUZE EKLE
+        $("#addToListMuze").click(function (e) {
+            e.preventDefault();
+            if ($.trim($("#MuzeList").val()) == "" || $.trim($("#turMuzeTarih").val()) == "") return;
+            var MuzeList = $('#MuzeList option:selected').text();
+            var muzeID = $("#MuzeList option:selected").val();
+            var turMuzeTarih = $("#turMuzeTarih").val();
+            var turKisiSayisi = $("#turKisiSayisi").val();
+            var muzeFiyat = $("#muze").val();
+            var muzeBirim  = $("#muzeBirim").val();
+            var muzeToplamFiyat = (turKisiSayisi * muzeFiyat);
+            var muzeTableBody = $("#muzeTable tbody");
+            var muzeItem = '<tr><td>' + muzeID + '</td><td>' + MuzeList + '</td><td>' + turMuzeTarih + '</td><td><span class="text text-success">' + muzeToplamFiyat +'</span></td><td><a data-muzeID="0" href="#" class="deleteMuze">Kaldır</a></td></tr>';
+            muzeTableBody.append(muzeItem);
+            clearItem();
+        });
+        //RESTORANT EKLE
+        $("#addToListRestorant").click(function (e) {
+            e.preventDefault();
+            if ($.trim($("#RestorantList").val()) == "" || $.trim($("#turRestorantTarih").val()) == "") return;
+            var RestorantList = $('#RestorantList option:selected').text();
+            var restorantID = $("#RestorantList option:selected").val();
+            var turRestorantTarih = $("#turRestorantTarih").val();
+            var turKisiSayisi = $("#turKisiSayisi").val();
+            var restorantFiyat = $("#restorant").val();
+            var birim = $("#restorantBirim").val();
+            var resToplamFiyat = (turKisiSayisi * restorantFiyat )
+            var restorantTableBody = $("#restorantTable tbody");
+            var restorantItem = '<tr><td>' + restorantID + '</td><td>' + RestorantList + '</td><td>' + turRestorantTarih + '</td><td><span class="text text-success">' + resToplamFiyat + '</span></td><td><a data-restorantID="0" href="#" class="deleteRestorant">Kaldır</a></td></tr>';
+            restorantTableBody.append(restorantItem);
+            clearItem();
+        });
+        //EKSTRA EKLE
+        $("#addToListEkstra").click(function (e) {
+            e.preventDefault();
+            if ($.trim($("#RestorantList").val()) == "" || $.trim($("#turEkstraTarih").val()) == "") return;
+            var EkstraList = $('#EkstraList option:selected').text();
+            var ekstraID = $("#EkstraList option:selected").val();
+            var turEkstraTarih = $("#turEkstraTarih").val();
+            var turKisiSayisi = $("#turKisiSayisi").val();
+            var ekstraFiyat = $("#ekstra").val();
+            var ekstraBirim = $("#ekstraBirim").val();
+            var turEkstraToplamFiyat = (turKisiSayisi * ekstraFiyat);
+            var ekstraTableBody = $("#ekstraTable tbody");
+            var ekstraItem = '<tr><td>' + ekstraID + '</td><td>' + EkstraList + '</td><td>' + turEkstraTarih + '</td><td><span class="text text-success">' + turEkstraToplamFiyat +'</span></td><td><a data-ekstraID="0" href="#" class="deleteEkstra">Kaldır</a></td></tr>';
+            ekstraTableBody.append(ekstraItem);
+            clearItem();
+        });
+        //ARAC EKLE
+        $("#addToArac").click(function (e) {
+            e.preventDefault();
+            if ($.trim($("#AracList").val()) == "") return;
+            var AracList = $('#AracList option:selected').text();
+            var aracID = $("#AracList option:selected").val(),
+                aracFiyat = $("#arac").val(),
+                aracBirim = $("#aracBirim").val(),
+                turGunSayisi = $("#turGunSayisi").val(),
+                turAracToplamFiyat = (turGunSayisi * aracFiyat),
+                aracTableBody = $("#aracTable tbody");
+            //alert(singleHesap + " " + doubleHesap + " " + familyHesap + " " + kingHesap + "Toplam:" + otelToplamFiyat);
+            var aracItem = '<tr><td>' + aracID + '</td><td>' + AracList + '</td><td><span class="text text-success">' + turAracToplamFiyat + '</span></td><td><a data-aracID="0" href="#" class="deleteArac">Kaldır</a></td></tr>';
+            aracTableBody.append(aracItem);
+            clearItem();
+        });
+        //OTELLERİ PARTİAL LİSTELE VE FİYAT GETİR
+        $("#OtelList").change(function (event) {
+            var otelID = $(this).val();
+            $.ajax({
+                url: "/Kotasyon/GetOtel?otelID=" + otelID,
+                type: "get",
+                //data: { otelSingleRoomFiyat: $("otelSingleRoomFiyat").val() },
+                dataType: "html",
+                success: function (data) {
+                    $("#divPartialView").html(data);
+                }
+            });
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/Tur/GetOtel?otelID=" + otelID,
+                success: function (data) {
+                    var singlefiyat = data[0].otelSingleRoomFiyat;
+                    var doublefiyat = data[0].otelDoubleRoomFiyat;
+                    var familyfiyat = data[0].otelFamilyRoomFiyat;
+                    var kingfiyat = data[0].otelKingSuitFiyat;
+                    var otelBirim = data[0].otelFiyatBirimi;
+                    document.getElementById("single").value = singlefiyat;
+                    document.getElementById("double").value = doublefiyat;
+                    document.getElementById("family").value = familyfiyat;
+                    document.getElementById("king").value = kingfiyat;
+                    document.getElementById("otelBirim").value = otelBirim;
+                    return data;                 
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            })
+        });
+        //MUZE FIYAT GETİR 
+        $("#MuzeList").change(function (event) {
+            var muzeID = $(this).val();
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/Tur/GetMuze?muzeID=" + muzeID,
+                success: function (data) {
+                    muzeGirisFiyat = data[0].muzeGirisFiyat;
+                    muzeFiyatBirim = data[0].muzeFiyatBirim
+                    var muzeFiyat = data[0].muzeGirisFiyat;
+                    var muzeFiyatBirim = data[0].muzeFiyatBirim;
+                    document.getElementById("muze").value = muzeFiyat;
+                    document.getElementById("muzeBirim").value = muzeFiyatBirim;
+                    return data;                 
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            })
+        });
+        //RESTORANT FİYAT GETİR
+        $("#RestorantList").change(function (event) {
+            var restorantID = $(this).val();
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/Tur/GetRestorant?restorantID=" + restorantID,
+                success: function (data) {
+                    restorantOrtalamFiyat = data[0].restorantOrtalamFiyat;
+                    restorantFiyatBirimi = data[0].restorantFiyatBirimi
+                    var restorantOrtalamFiyat = data[0].restorantOrtalamFiyat;
+                    var restorantFiyatBirimi = data[0].restorantFiyatBirimi;
+                    document.getElementById("restorant").value = restorantOrtalamFiyat;
+                    document.getElementById("restorantBirim").value = restorantFiyatBirimi;
+                    return data;                 
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            })
+        });
+        //EKSTRA FIYAT GETIR
+        $("#EkstraList").change(function (event) {
+            var ekstraID = $(this).val();
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/Tur/GetEkstra?ekstraID=" + ekstraID,
+                success: function (data) {
+                    var ekstraFiyat = data[0].ekstraFiyat;
+                    var ekstraFiyatBirimi = data[0].ekstraFiyatBirimi;
+                    document.getElementById("ekstra").value = ekstraFiyat;
+                    document.getElementById("ekstraBirim").value = ekstraFiyatBirimi;
+                    return data;                 
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            })
+        });
+        //ARAC LIST
+        $("#AracList").change(function (event) {
+            var aracID = $(this).val();
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "/Tur/GetArac?aracID=" + aracID,
+                success: function (data) {
+                    var aracFiyat = data[0].aracFiyat;
+                    var aracFiyatBirim = data[0].aracFiyatBirim;
+                    document.getElementById("arac").value = aracFiyat;
+                    document.getElementById("aracBirim").value = aracFiyatBirim;
+                    return data;                 
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            })
+        });
+        //OTEL FORMUNU TEMIZLE
+        function clearItem() {
+            $("#OtelList").val('');
+            $("#otelkotTarih").val('');
+            $("#singleKisi").val('');
+            $("#doubleKisi").val('');
+            $("#familyKisi").val('');
+            $("#kingSuitKisi").val('');
+
+        }
+        //OTEL SİL
+        $(document).on('click', 'a.deleteOtel', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-otelID') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+        // MUZE SİL
+        $(document).on('click', 'a.deleteMuze', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-muzeID') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+        //RESTORANT SİL
+        $(document).on('click', 'a.deleteRestorant', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-restorantID') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+        //EKSTRA SİL
+        $(document).on('click', 'a.deleteEkstra', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-ekstraID') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+        //ARAC SİL
+        $(document).on('click', 'a.deleteArac', function (e) {
+            e.preventDefault();
+            var $self = $(this);
+            if ($(this).attr('data-aracID') == "0") {
+                $(this).parents('tr').css("background-color", "#ff6347").fadeOut(800, function () {
+                    $(this).remove();
+                });
+            }
+        });
+        //VERITABANINA KAYDET
+        function saveOrder(data) {
+            return $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                type: 'POST',
+                url: "/Tur/SaveOrder",
+                data: data,
+                success: function (result) {
+                    alert(result);
+                    //location.reload();
+                    location.href = "/Home/Index/"
+                },
+                error: function () {
+                    alert("İşleminiz Başarısız olmuştur!");
+                }
+            });
+        }
+        $("#saveOrder").click(function (e) {
+            e.preventDefault();
+            var turOtel = [];
+            var turMuze = [];
+            var turRestorant = [];
+            var turEkstra = [];
+            var turArac = [];
+            turOtel.length = 0;
+            turMuze.length = 0;
+            turRestorant.length = 0;
+            turEkstra.length = 0;
+            turArac.length = 0;
+            $.each($("#otelTable tbody tr"), function () {
+                turOtel.push({
+                    otelID: $(this).find('td:eq(0)').html(),
+                    turOtelTarih: $(this).find('td:eq(2)').html(),
+                    singleKisi: $(this).find('td:eq(3)').html(),
+                    doubleKisi: $(this).find('td:eq(4)').html(),
+                    familyKisi: $(this).find('td:eq(5)').html(),
+                    kingSuitKisi: $(this).find('td:eq(6)').html(),
+                    otelToplamFiyat: $(this).find('span:eq(0)').html(),
+                });
+            });
+
+            $.each($("#muzeTable tbody tr"), function () {
+                turMuze.push({
+                    muzeID: $(this).find('td:eq(0)').html(),
+                    turMuzeTarih: $(this).find('td:eq(2)').html(),
+                    muzeToplamFiyat: $(this).find('span:eq(0)').html(),
+                });
+            });
+
+            $.each($("#restorantTable tbody tr"), function () {
+                turRestorant.push({
+                    restorantID: $(this).find('td:eq(0)').html(),
+                    turRestorantTarih: $(this).find('td:eq(2)').html(),
+                    resToplamFiyat: $(this).find('span:eq(0)').html(),
+                });
+            });
+
+            $.each($("#ekstraTable tbody tr"), function () {
+                turEkstra.push({
+                    ekstraID: $(this).find('td:eq(0)').html(),
+                    turEkstraTarih: $(this).find('td:eq(2)').html(),
+                    turEkstraToplamFiyat: $(this).find('td:eq(3)').html(),
+                });
+            });
+
+            $.each($("#aracTable tbody tr"), function () {
+                turArac.push({
+                    aracID: $(this).find('td:eq(0)').html(),
+                    turAracToplamFiyat: $(this).find('span:eq(0)').html(),
+                });
+            });
+
+            var data = JSON.stringify({
+                turKod: $("#turKod").val(),
+                turAd: $("#turAd").val(),
+                turAciklama: $("#turAciklama").val(),
+                turRenk : $("#turRenk").val(),
+                turBaslangic: $("#turBaslangic").val(),
+                turBitis: $("#turBitis").val(),
+                turKisiSayisi: $("#turKisiSayisi").val(),
+                turGunSayisi: $("#turGunSayisi").val(),
+                rehberID: $("#RehberList option:selected").val(),
+                turOtel: turOtel,
+                turMuze: turMuze,
+                turRestorant: turRestorant,
+                turEkstra: turEkstra,
+                turArac: turArac
+
+            });
+
+            $.when(saveOrder(data)).then(function (response) {
+                console.log(response);
+            }).fail(function (err) {
+                console.log(err);
+            });
+        });
+    });
+</script>

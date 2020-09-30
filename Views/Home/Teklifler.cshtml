@@ -1,0 +1,155 @@
+﻿@model IList<TourApp.Models.Kotasyon>
+
+@{
+    ViewBag.Title = "Teklifler";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<section id="table-chechbox">
+    <div class="card">
+        <!-- datatable start -->
+        <div class="table-responsive">
+            <table id="table-extended" class="table table-transparent">
+                <thead>
+                    <tr>
+                        <th>
+                            
+                        </th>
+                        <th>Onay Durumu</th>
+                        <th>Kotasyon</th>
+                        <th>Başlangıç</th>
+                        <th>Bitiş</th>
+                        <th>Teklif Yapan</th>
+                        <th></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="checkbox1" value="@item.kotasyonID" onchange="changeEvent(this)">
+                                        <label class="form-check-label" for="checkbox1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                @if (item.onaylanmis == true)
+                                {
+                                    <span class="badge badge-light-success badge-pill">Onaylanmış</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-light-danger badge-pill">Onaylanmamış</span>
+                                }
+                            </td>
+                            <td>@item.kotasyonAd</td>
+                            <td>@Convert.ToDateTime(@item.kotasyonBas).ToShortDateString()</td>
+                            <td>@Convert.ToDateTime(@item.kotasyonBit).ToShortDateString()</td>
+                            <td>
+                                @*<ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                        <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
+                                            <img src="~/frest-admin-v1.0/app-assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="30" width="30">
+                                        </li>
+                                    </ul>*@
+                                @item.AltFirma.altFirmaAd
+                            </td>
+                            <td>
+                                
+                                <a href="@Url.Action("TeklifDetay","Home", new { kotasyonID = @item.kotasyonID })"><i class="badge-circle badge-circle-light-primary bx bx-detail font-medium-1"></i></a>
+                                <a href="#"><i class="badge-circle badge-circle-light-danger bx bx-trash font-medium-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteKotasyonRecord(@item.kotasyonID)"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+        <!-- datatable ends -->
+    </div>
+</section>
+
+<button align="center" class="btn btn-success glow mr-1 mb-1" onclick="DurumDegistir()"><i class="bx bx-check"></i>Onayla</button>
+
+<!-- DELETE MODAL-->
+<div class="modal fade text-left" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">Seçilen Kotasyonu Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Seçilen Kotasyonu silmek istediğinize emin misiniz ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">İptal</span>
+                </button>
+                <button type="button" class="btn btn-danger ml-1" onclick="ConfirmDelete()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Onayla</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Hidden("kotasyonID")
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- DELETE OTEL -->
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteKotasyonRecord = function (kotasyonID) {
+        $("#kotasyonID").val(kotasyonID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var kotasyonID = $("#kotasyonID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Kotasyon/DeleteKotasyonRecord?kotasyonID=" + kotasyonID,
+            success: function (result) {
+                alert("Silme islemi Basarili!..");
+                window.location.href = "/Home/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>
+
+<!--ONAYLA-->
+<script>
+    var dataList = [];
+    var changeEvent = function (e) {
+        if (e.checked) {
+            var data = {
+                kotasyonID : e.value
+            };
+            dataList.push(data);
+        }
+    }
+
+    var DurumDegistir = function () {
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("TeklifOnayla","Home")',
+            data: { 'model': dataList },
+            success: function (result) {
+                //location.changeEvent();
+                 location.reload();
+                console.log(result);
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,91 @@
+﻿@model IList<TourApp.Models.Kotasyon>
+@{
+    ViewBag.Title = "AltFirmaIndex";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@if (Session["userTipID"] != null)
+{
+    Response.Redirect("../Login/AltFirmaLogin");
+}
+
+<!--Kotasyonlar-->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-10">
+                <h5 class="panel-title pull-left" style="margin-left:10px;">
+                    <strong>Kotasyon Detayları</strong>
+                </h5>
+            </div>
+            
+        </div>
+    </div>
+    <br /><br />
+
+    @*Receive All Database Data From Controller And Display Those Data In Client Side*@
+
+<section class="invoice-list-wrapper">
+    <!-- create invoice button-->
+    <div class="invoice-create-btn mb-1">
+        <button style="margin-right:10px" class="btn btn-primary glow invoice-create" onclick="location.href='@Url.Action("CreateKotasyon","Kotasyon")'" aria-pressed="true">Kotasyon Oluştur</button>
+    </div>
+    <!-- Options and filter dropdown button-->
+    <div class="action-dropdown-btn d-none">
+        <div class="dropdown invoice-filter-action">           
+            
+        </div>
+        
+    </div>
+    <div class="table-responsive">
+        <table class="table invoice-data-table dt-responsive" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Gün</th>
+                    <th>Kişi Sayısı</th>
+                    <th>Başlangıç</th>
+                    <th>Bitiş</th>
+                    <th>Ulke</th>
+                    <th>Durum</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.kotasyonGunSayisi</td>
+                    <td>@item.kotasyonKisiSayisi</td>
+                    <td>@Convert.ToDateTime(@item.kotasyonBas).ToShortDateString()</td>
+                    <td>@Convert.ToDateTime(@item.kotasyonBit).ToShortDateString()</td>
+                    <td>@item.kotasyonGelenUlke</td>
+                    <td>
+                        @if (item.onaylanmis == true)
+                        {
+                            <span class="badge badge-light-success badge-pill">Onaylanmış</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-light-danger badge-pill">Onaylanmamış</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="invoice-action">
+                            <a href="@Url.Action("KotasyonDetay","Home", new { kotasyonID = @item.kotasyonID })" class="invoice-action-view mr-1">
+                                <i class="bx bx-show-alt"></i>
+                            </a>
+                            <a href="app-invoice-edit.html" class="invoice-action-edit cursor-pointer">
+                                <i class="bx bx-edit"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+</div>
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/pages/app-invoice.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/js/scripts/pages/app-invoice.js"></script>

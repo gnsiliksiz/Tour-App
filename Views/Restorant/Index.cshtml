@@ -1,0 +1,202 @@
+﻿@model IList<TourApp.Models.Restorant>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@if (Session["userID"] != null)
+{
+    <button type="button" class="btn btn-primary mb-1 mb-1" onclick="location.href='@Url.Action("Create","Restorant")'">
+        Restorant Ekle
+    </button>
+}
+
+<!-- RESTORANTLAR-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-danger">Restorantlar</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="card-text">
+                                Düzenleyeceğiniz turlar için gidilecek restorantları planlayın.
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("ExportToExcel","Restorant")'">
+                                Excele Dönüştür
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration" id="example">
+                            <thead>
+                                <tr>
+                                    <th>Restorant</th>
+                                    <th>İl</th>
+                                    <th>İlçe</th>
+                                    <th>Telefon</th>
+                                    <th>Ortalama Fiyat</th>
+                                    @if (Session["userID"] != null)
+                                    {
+                                        <th></th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (item.restorantFoto != null)
+                                            {
+                                                <a data-toggle="popover" data-trigger="hover" id="@item.restorantID">
+                                                    <img src="@item.restorantFoto" alt="@item.restorantID" class="rounded-circle" height="30" width="30" />
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a data-toggle="popover" data-trigger="hover" id="@item.restorantID">
+                                                    <img src="~/Uploads/RestorantPhoto/defaultRestorant.jpg" alt="@item.restorantAd" class="rounded-circle" height="30" width="30" />
+                                                </a>
+                                            }
+                                            &nbsp;&nbsp;
+                                            @item.restorantAd
+                                        </td>
+                                        <td>@item.restorantIl</td>
+                                        <td>@item.restorantIlce</td>
+                                        <td>@item.restorantTelefon</td>
+                                        <td><span class="text text-success">@item.restorantOrtalamFiyat @item.restorantFiyatBirimi</span></td>
+                                        @if (Session["userID"] != null)
+                                        {
+                                            <td>
+                                                <div class="dropdown">
+                                                    <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></span>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="@Url.Action("RestorantEdit", "Restorant", new { restorantID = item.restorantID })"><i class="bx bx-edit-alt mr-1"></i> Düzenle</a>
+                                                        <a class="dropdown-item"><i class="bx bx-trash mr-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteRestorantRecord(@item.restorantID)"></i> Sil</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+@Html.Hidden("restorantID")
+
+<!-- DELETE MODAL-->
+<div class="modal fade text-left" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">Seçilen Restorantı Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Seçilen Restorantı silmek istediğinize emin misiniz ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">İptal</span>
+                </button>
+                <button type="button" class="btn btn-danger ml-1" onclick="ConfirmDelete()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Onayla</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/polyfill.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+
+<!--RESTORANTLAR-->
+<!--DATATABLE-->
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            },
+            buttons: [
+                'pdfHtml5',
+                'print',
+                'copyHtml5',
+            ]
+        });
+    });
+</script>
+
+<!-- DELETE OTEL -->
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteRestorantRecord = function (restorantID) {
+        $("#restorantID").val(restorantID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var restorantID = $("#restorantID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Restorant/DeleteRestorantRecord?restorantID=" + restorantID,
+            success: function (result) {
+                swal("Tebrikler!", "Silme işlemi Başarılı", "success");
+                window.location.href = "/Restorant/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>
+
+<!--DETAILS-->
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+            title: setData,
+            html: true,
+            placement: 'right'
+
+        });
+        function setData(restorantID) {
+            var set_data = '';
+            var element = $(this);
+            var restorantID = element.attr("id");
+            $.ajax({
+                url: "/Restorant/RestorantInfo?restorantID" + restorantID,
+                method: "post",
+                async: false,
+                data: { restorantID: restorantID },
+                success: function (data) {
+                    set_data = data;
+                }
+
+            });
+            return set_data;
+        }
+    });
+</script>

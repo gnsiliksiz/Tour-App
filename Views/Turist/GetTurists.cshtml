@@ -1,0 +1,134 @@
+﻿@model IList<TourApp.Models.Turist>
+
+<!-- Turistler-->
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-danger">Turistler</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard">
+                    <p class="card-text">
+                        Turistlerinizin Bilgilerini Görün
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration">
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Ad</th>
+                                    <th>Tc No</th>
+                                    <th>Telefon</th>
+                                    <th>Yaş</th>
+                                    <th>Pasaport No</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+                                    @*<td>
+            <a data-toggle="popover" data-trigger="hover" id="@item.turistID">
+                <span class="text text-danger"> <img src="@item.turistFoto" class="rounded-circle" height="40" width="40" /></span>
+            </a>
+        </td>*@
+                                    <td>
+                                        @if (item.turistFoto != null)
+                                        {
+                                            <img src="@item.turistFoto" class="rounded-circle" height="40" width="40" />
+                                        }
+                                        else
+                                        {
+                                            if (item.turistCinsiyet == "Bay")
+                                            {
+                                                <div class="d-flex align-items-center text-bold-500"><img class="rounded-circle mr-1" src="~/frest-admin-v1.0/app-assets/images/portrait/small/avatar-s-1.jpg" alt="avatar" height="32" width="32"></div>
+                                            }
+                                            else
+                                            {
+                                                <div class="d-flex align-items-center text-bold-500"><img class="rounded-circle mr-1" src="~/frest-admin-v1.0/app-assets/images/portrait/small/avatar-s-12.jpg" alt="avatar" height="32" width="32"></div>
+                                            }
+                                        }
+
+
+                                    </td>
+                                    <td>@item.turistAd</td>
+                                    <td>@item.turistTC</td>
+                                    <td>@item.turistTel</td>
+                                    <td>@item.turistYas</td>
+                                    <td>@item.turistPasaportNo</td>
+                                    @if (Session["userID"] != null)
+                                    {
+                                        <td>
+                                            <a href="@Url.Action("TuristEdit", "Turist", new { turistID = item.turistID })"><i class="badge-circle badge-circle-light-primary bx bx-edit font-medium-1"></i></a>
+                                            <a href="#"><i class="badge-circle badge-circle-light-danger bx bx-trash font-medium-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteTuristRecord(@item.turistID)"></i></a>
+                                        </td>
+                                    }
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+
+@Html.Hidden("turistID")
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- DELETE MODAL-->
+<div class="modal fade text-left" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">Seçilen Turisti Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Seçilen Turisti silmek istediğinize emin misiniz ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">İptal</span>
+                </button>
+                <button type="button" class="btn btn-danger ml-1" onclick="ConfirmDelete()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Onayla</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE Turist -->
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteTuristRecord = function (turistID) {
+        $("#turistID").val(turistID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var turistID = $("#turistID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Turist/DeleteTuristRecord?turistID=" + turistID,
+            success: function (result) {
+                alert("Silme islemi Basarili!..");
+                window.location.href = "/Turist/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>

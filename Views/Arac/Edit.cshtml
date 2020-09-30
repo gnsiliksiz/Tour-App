@@ -1,0 +1,68 @@
+﻿@if (Session["userID"] == null)
+{
+    Response.Redirect("~/Hata/InsufficientPrivileges");
+}
+@model TourApp.Models.Arac
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("Edit", "Arac", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Arac</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.aracID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.aracMarka, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.aracMarka, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.aracMarka, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.aracFiyat, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.aracFiyat, new { htmlAttributes = new { @class = "form-control",@type="number" } })
+                @Html.ValidationMessageFor(model => model.aracFiyat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.aracFiyatBirim, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="custom-select form-control" id="aracFiyatBirim" name="aracFiyatBirim">
+                    <option value="Tl (₺)">Tl (₺)</option>
+                    <option value="Euro (€)">Euro (€)</option>
+                    <option value="Dolar ($)">Dolar ($)</option>
+                    <option value="Rus Rublesi (рубль9)">Rus Rublesi (рубль)</option>
+                    <option value="Sterlin (£)">Sterlin (£)</option>
+                    <option value="Yuan (¥)">Yuan (¥)</option>
+                    <option value="Leva (лв)">Bulgaristan Levası (лв)</option>
+                    <option value="İran Riyali ﷼">İran Riyali (﷼)</option>
+                    <option value="SAR ﷼">Suudi Arabistan Riyali (﷼)</option>
+                    <option value="Grivna ₴">Ukrayna Grivnası (₴)</option>
+                    <option value="Katar Riyali ﷼">Katar Riyali (﷼)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

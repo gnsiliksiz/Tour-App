@@ -1,0 +1,154 @@
+﻿@model IList<TourApp.Models.Rehber>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@if (Session["userID"] != null)
+{
+    <button type="button" class="btn btn-primary mb-1 mb-1" onclick="location.href='@Url.Action("Create","Rehber")'">
+        Rehber Ekle
+    </button>
+}
+
+
+<!--REHBERLER-->
+<section id="column-selectors">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Rehberlerim</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+                        <p class="card-text">
+                            Rehberlerinizi görüntüleyebileceğiniz, düzenleyebileceğiniz ekran
+                        </p>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped dataex-html5-selectors">
+                                <thead>
+                                    <tr>
+                                        <th>Foto</th>
+                                        <th>İsim</th>
+                                        <th>Cinsiyet</th>
+                                        <th>Telefon</th>
+                                        <th>Email</th>
+                                        @if (Session["userID"] != null)
+                                        {
+                                            <th></th>
+                                        }
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (item.rehberPhoto != null)
+                                                {
+                                                    <img src="@item.rehberPhoto" alt="@item.rehberID" class="rounded-circle" height="30" width="30" />
+                                                }
+                                                else
+                                                {
+                                                    if (item.rehberCinsiyet == "Bay")
+                                                    {
+                                                        <img src="~/frest-admin-v1.0/app-assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" class="rounded-circle" height="30" width="30">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/frest-admin-v1.0/app-assets/images/portrait/small/avatar-s-6.jpg" alt="Avatar" class="rounded-circle" height="30" width="30">
+                                                    }
+                                                }
+
+                                            </td>
+                                            <td>
+                                                <a href="#" data-toggle="popover" data-trigger="hover" id="@item.rehberID">
+                                                    <span class="text text-muted">@item.rehberAd</span>
+                                                </a>
+                                            </td>
+                                            <td>@item.rehberCinsiyet </td>
+                                            <td>@item.rehberTelefon</td>
+                                            <td>@item.rehberEmail</td>
+                                            @if (Session["userID"] != null)
+                                            {
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></span>
+                                                        <div class="dropdown-menu dropdown-menu-right">
+                                                            <a class="dropdown-item" href="@Url.Action("Edit", "Rehber", new { rehberID = item.rehberID })"><i class="bx bx-edit-alt mr-1"></i> Düzenle</a>
+                                                            <a class="dropdown-item"><i class="bx bx-trash mr-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteRehberRecord(@item.rehberID)"></i> Sil</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            }
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@Html.Hidden("rehberID")
+
+
+<!-- DELETE MODAL-->
+<div class="modal fade text-left" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">Seçilen Rehberi Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Seçilen Rehberi silmek istediğinize emin misiniz ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">İptal</span>
+                </button>
+                <button type="button" class="btn btn-danger ml-1" onclick="ConfirmDelete()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Onayla</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--DELETE-->
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteRehberRecord = function (rehberID) {
+        $("#rehberID").val(rehberID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var rehberID = $("#rehberID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Rehber/DeleteRehberRecord?rehberID=" + rehberID,
+            success: function (result) {
+                swal("Good job!", "Silme işlemi Başarılı", "success");
+                window.location.href = "/Rehber/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>
+

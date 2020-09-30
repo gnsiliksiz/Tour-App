@@ -1,0 +1,248 @@
+﻿@model IList<TourApp.Models.Arac>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@if (Session["userID"] != null)
+{
+    <button type="button" class="btn btn-primary mb-1 btn-md" data-toggle="modal" data-target="#mediumModal">
+        Araç Tanımla
+    </button>
+}
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-danger">Araçlar</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard">
+                    <p class="card-text">
+                        Sahip olduğunuz veya kiralık araçları görüntüleyebilirsiniz.
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table table-striped dataex-html5-selectors dataex">
+                            <thead>
+                                <tr>
+                                    <th>Marka</th>
+                                    <th>Kapasite</th>
+                                    <th>Günlük Fiyat</th>
+                                    @if (Session["userID"] != null)
+                                    {
+                                        <th></th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    int fiyat = 0;
+                                    fiyat = Convert.ToInt32(item.aracFiyat);
+                                    <tr>
+                                        <td>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="@item.aracMarka" class="avatar pull-up">
+                                                @if (item.aracMarka.Contains("ravego"))
+                                                {
+                                                    <img src="~/Uploads/AracPhoto/MercedesTravego.jpg" class="rounded-circle" height="40" width="40" />
+                                                }
+                                                @if (item.aracMarka.Contains("ourismo"))
+                                                {
+                                                    <img src="~/Uploads/AracPhoto/MercedesSprinter.jpg" class="rounded-circle" height="40" width="40" />
+                                                }
+                                                @if (item.aracMarka.Contains("rafter"))
+                                                {
+                                                    <img src="~/Uploads/AracPhoto/WolkswagenCrafter.jpg" class="rounded-circle" height="40" width="40" />
+                                                }
+                                                @if (item.aracMarka.Contains("ito"))
+                                                {
+                                                    <img src="~/Uploads/AracPhoto/MercedesVito.jpg" class="rounded-circle" height="40" width="40" />
+                                                }
+                                               
+
+                                            </li>
+                                            @Html.DisplayFor(modelItem => item.aracMarka)
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.aracKapasite) Kişi</td>
+                                        <td>
+                                            <span class="text text-success">@fiyat.ToString("#.00")</span> @item.aracFiyatBirim
+                                        </td>
+                                        @if (Session["userID"] != null)
+                                        {
+                                            <td>
+                                                <div class="dropdown">
+                                                    <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></span>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="@Url.Action("Edit", "Arac", new { aracID = item.aracID })"><i class="bx bx-edit-alt mr-1"></i> Düzenle</a>
+                                                        <a class="dropdown-item"><i class="bx bx-trash mr-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteAracRecord(@item.aracID)"></i> Sil</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ARAC EKLE-->
+<div id="mediumModal" class="modal fade text-left" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title white" id="mediumModalLabel">Araç Tanımla</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="" id="Registration">
+                    @Html.Hidden("aracID")
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("aracMarka", null, new { @placeholder = "Marka", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("aracKapasite", null, new { @placeholder = "Kapasite", @class = "form-control", @type = "number" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @*@Html.TextBox("aracFiyatBirim", null, new { @placeholder = "tl, euro, dolar .. ", @class = "form-control", @type = "text" })*@
+                            <select class="custom-select form-control" id="aracFiyatBirim" name="aracFiyatBirim">
+                                <option value="Tl (₺)">Tl (₺)</option>
+                                <option value="Euro (€)">Euro (€)</option>
+                                <option value="Dolar ($)">Dolar ($)</option>
+                                <option value="Rus Rublesi (рубль9)">Rus Rublesi (рубль)</option>
+                                <option value="Sterlin (£)">Sterlin (£)</option>
+                                <option value="Yuan (¥)">Yuan (¥)</option>
+                                <option value="Leva (лв)">Bulgaristan Levası (лв)</option>
+                                <option value="İran Riyali ﷼">İran Riyali (﷼)</option>
+                                <option value="SAR ﷼">Suudi Arabistan Riyali (﷼)</option>
+                                <option value="Grivna ₴">Ukrayna Grivnası (₴)</option>
+                                <option value="Katar Riyali ﷼">Katar Riyali (﷼)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("aracFiyat", null, new { @placeholder = "Günlük Fiyat Giriniz", @class = "form-control", @type = "number" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-primary" onclick="SaveForm()">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal">Araç Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> Seçilen Aracı silmek istediğinize emin misiniz ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-danger" onclick="ConfirmDelete()">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="~/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/polyfill.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#toast1").hide();
+        $("#toast2").hide();
+    });
+    function AddNewArac() {
+        $("#AddModal").modal();
+        //$("#message2").hide();
+    }
+
+    function SaveForm() {
+        var aracPlaka = $("#aracPlaka").val();
+        var aracMarka = $("#aracMarka").val();
+        var aracFiyat = $("#aracFiyat").val();
+        var aracFiyatBirim = $("#aracFiyatBirim").val();
+        if (aracPlaka == "" || aracMarka == "" || aracFiyat == "" || aracFiyatBirim == "") {
+            //alert("Girdiğiniz Bilgiler Eksik veya Hatalıdır.");
+            //Swal.fire({
+            //    icon: 'error',
+            //    title: 'Oops...',
+            //    text: 'Girdiğiniz Bilgiler Eksik veya Hatalıdır.',
+            //})
+            Swal.fire(
+                'Hata',
+                'Girdiğiniz Bilgiler Eksik veya Hatalıdır.',
+                'error'
+            )
+            return false;
+        }
+        var data = $("#Registration").serialize();
+        $.ajax({
+            type: "post",
+            data: data,
+            url: "/Arac/SaveData",
+            success: function (result) {
+                Swal.fire(
+                    'Başarılı',
+                    'Araç tanımlama başarıyla gerçekleştirilmiştir.',
+                    'success'
+                )
+                window.location.href = "/Arac/index";
+                $("#Registration")[0].reset();
+            }
+        });
+    }
+</script>
+
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteAracRecord = function (aracID) {
+        $("#aracID").val(aracID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var aracID = $("#aracID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Arac/DeleteAracRecord?aracID=" + aracID,
+            success: function (result) {
+                alert("Silme islemi Basarili!..");
+                window.location.href = "/Arac/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>

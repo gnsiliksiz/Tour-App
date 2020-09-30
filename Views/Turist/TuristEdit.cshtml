@@ -1,0 +1,95 @@
+﻿@if (Session["userID"] == null)
+{
+    Response.Redirect("~/Hata/InsufficientPrivileges");
+}
+@model TourApp.Models.Turist
+@{
+    ViewBag.Title = "TuristEdit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@using (Html.BeginForm("TuristEdit", "Turist", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Hidden("turistID")
+    <div class="col-md-12 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Turist Düzenle</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="form form-vertical">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Turist Adı</label>
+                                        <div class="position-relative">
+                                            @Html.EditorFor(model => model.turistAd, new { htmlAttributes = new { @class = "form-control", @type = "text", required = "required" } })
+                                            @Html.ValidationMessageFor(model => model.turistAd, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Telefon</label>
+                                        <div class="position-relative">
+                                            @Html.EditorFor(model => model.turistTel, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.turistTel, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Yaş</label>
+                                        <div class="position-relative">
+                                            @Html.EditorFor(model => model.turistYas, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                            @Html.ValidationMessageFor(model => model.turistYas, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Kimlik No</label>
+                                        <div class="position-relative">
+                                            @Html.EditorFor(model => model.turistTC, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                            @Html.ValidationMessageFor(model => model.turistTC, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Pasaport Numarası</label>
+                                        <div class="position-relative">
+                                            @Html.EditorFor(model => model.turistPasaportNo, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.turistPasaportNo, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label>Fotoğraf Seçiniz</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="turistFoto" id="turistFoto" value="" accept=".jpg,.png,.gif,.JPEG,.jpeg" />
+                                        <label class="custom-file-label" for="">Dosya Seçiniz</label>
+                                    </div>
+
+                                    
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary mr-1 mb-1">Onayla</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

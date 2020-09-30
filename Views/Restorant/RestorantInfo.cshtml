@@ -1,0 +1,33 @@
+﻿@model IEnumerable<TourApp.Models.Restorant>
+@{
+    ViewBag.Title = "RestorantInfo";
+    Layout = null;
+}
+
+    <div class="container">
+        <h4 class="info">Restorant Detayları</h4>
+        <div>------------------------------</div>
+        @foreach (var item in Model)
+        {
+            if (item.restorantFoto != null)
+            {
+                <img src="@item.restorantFoto" alt="IMAGES" />
+            }
+            <p><strong>Restorant İsmi : </strong> @item.restorantAd</p>
+            <p><strong>Adres : </strong> @item.restorantAdres</p>
+            <p><strong>Kahvaltı Fiyat : </strong> @item.restorantKahvaltiFiyat @item.restorantFiyatBirimi</p>
+            <p><strong>Oglen Yemegi Fiyat : </strong> @item.restorantOglenFiyat @item.restorantFiyatBirimi</p>
+            <p><strong>Akşam Yemeği Fiyat : </strong> @item.restorantAksamFiyat @item.restorantFiyatBirimi</p>
+        }
+    </div>
+
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/vendors/css/vendors.min.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/bootstrap-extended.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/colors.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/components.css">
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/vendors.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js"></script>
+

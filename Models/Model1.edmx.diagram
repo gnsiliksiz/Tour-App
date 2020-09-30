@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="deb2ad6fc432444ba8fc308ec37bd699" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="TourModel.AltFirma" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Arac" Width="1.5" PointX="7.5" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.AracKot" Width="1.5" PointX="9.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Dil" Width="1.5" PointX="8" PointY="48.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Ekstra" Width="1.5" PointX="5.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.EkstraKot" Width="1.5" PointX="9.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Kotasyon" Width="1.5" PointX="7.5" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Muze" Width="1.5" PointX="5.25" PointY="20.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.MuzeKot" Width="1.5" PointX="9.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Otel" Width="1.5" PointX="5.25" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.OtelKot" Width="1.5" PointX="9.75" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Rehber" Width="1.5" PointX="10.25" PointY="30.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.ResKot" Width="1.5" PointX="9.75" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Restorant" Width="1.5" PointX="5.25" PointY="35" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.Tur" Width="1.5" PointX="5.25" PointY="40.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.TurArac" Width="1.5" PointX="7.5" PointY="44.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.TurEkstra" Width="1.5" PointX="7.5" PointY="29.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.TurMuze" Width="1.5" PointX="7.5" PointY="32.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.TurOtel" Width="1.5" PointX="7.5" PointY="36.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.TurRestorant" Width="1.5" PointX="10.5" PointY="37.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.User" Width="1.5" PointX="3" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourModel.UserTip" Width="1.5" PointX="0.75" PointY="25" IsExpanded="true" />
+        <AssociationConnector Association="TourModel.FK_AltFirma_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_Kotasyon_AltFirma" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_AracKot_Arac" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurArac_Arac" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_AracKot_Kotasyon" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_Ekstra_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_EkstraKot_Ekstra" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurEkstra_Ekstra" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_EkstraKot_Kotasyon" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_MuzeKot_Kotasyon" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_OtelKot_Kotasyon" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_ResKot_Kotasyon" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_Muze_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_MuzeKot_Muze" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurMuze_Muze" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_Otel_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_OtelKot_Otel" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurOtel_Otel" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_Rehber_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_ResKot_Restorant" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_Restorant_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurRestorant_Restorant" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_Tur_User" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurArac_Tur" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurEkstra_Tur" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurMuze_Tur" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurOtel_Tur" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_TurRestorant_Tur" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_User_UserTip" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.RehberDil" ManuallyRouted="false" />
+        <AssociationConnector Association="TourModel.FK_Tur_Rehber" />
+        <EntityTypeShape EntityType="TourModel.Kafile" Width="1.5" PointX="7.5" PointY="51.5" />
+        <EntityTypeShape EntityType="TourModel.Turist" Width="1.5" PointX="9.75" PointY="51.125" />
+        <AssociationConnector Association="TourModel.FK_Kafile_Tur" />
+        <AssociationConnector Association="TourModel.FK_Turist_Kafile" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

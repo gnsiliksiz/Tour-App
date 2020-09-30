@@ -1,0 +1,198 @@
+﻿@model IList<TourApp.Models.Otel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+@if (Session["userID"] != null)
+{
+    <button type="button" class="btn btn-primary mb-1 mb-1" onclick="location.href='@Url.Action("Create","Otel")'">
+        Yeni Otel Ekle
+    </button>
+}
+
+<!-- OTELLER-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-danger">Oteller</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="card-text">
+                                Düzenleyeceğiniz turlar için gidilecek otelleri planlayın.
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("ExportToExcel","Otel")'">
+                                Excele Dönüştür
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration" id="example">
+                            <!--<table class="table table-striped dataex-html5-selectors dataex">-->
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Otel</th>
+                                    <th>Telefon</th>
+                                    <th>İl</th>
+                                    <th>İlçe</th>
+                                    <th>Yıldız</th>
+                                    @if (Session["userID"] != null)
+                                    {
+                                        <th></th>
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (item.otelResim != null)
+                                            {
+                                                <a data-toggle="popover" data-trigger="hover" id="@item.otelID">
+                                                    <img src="@item.otelResim" alt="@item.otelID" class="rounded-circle" height="30" width="30" />
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <img src="~/Uploads/OtelPhoto/defaultHotel.jpg" alt="@item.otelAd" class="rounded-circle" height="30" width="30" />
+                                            }
+
+                                        </td>
+
+                                        <td>@item.otelAd</td>
+                                        <td>@item.otelTelefon</td>
+                                        <td>@item.otelIl</td>
+                                        <td>@item.otelIlce</td>
+                                        <td>@item.otelTip</td>
+                                        @if (Session["userID"] != null)
+                                        {
+                                            <td>
+                                                <div class="dropdown">
+                                                    <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></span>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="@Url.Action("OtelEdit", "Otel", new { otelID = item.otelID })"><i class="bx bx-edit-alt mr-1"></i> Düzenle</a>
+                                                        <a class="dropdown-item"><i class="bx bx-trash mr-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteOtelRecord(@item.otelID)"></i> Sil</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        }
+
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Hidden("otelID")
+
+<!-- DELETE MODAL-->
+<div class="modal fade text-left" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel120" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title white" id="myModalLabel120">Seçilen Oteli Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                Seçilen Oteli silmek istediğinize emin misiniz ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                    <i class="bx bx-x d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">İptal</span>
+                </button>
+                <button type="button" class="btn btn-danger ml-1" onclick="ConfirmDelete()">
+                    <i class="bx bx-check d-block d-sm-none"></i>
+                    <span class="d-none d-sm-block">Onayla</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/sweetalert2.all.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/vendors/js/extensions/polyfill.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/js/scripts/extensions/sweet-alerts.js"></script>
+<!--DATATABLE-->
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            },
+            buttons: [
+                'pdfHtml5',
+                'print',
+                'copyHtml5',
+            ]
+        });
+    });
+</script>
+<!-- DELETE OTEL -->
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteOtelRecord = function (otelID) {
+        $("#otelID").val(otelID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var otelID = $("#otelID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Otel/DeleteOtelRecord?otelID=" + otelID,
+            success: function (result) {
+                swal("Tebrikler!", "Silme işlemi Başarılı", "success");
+                window.location.href = "/Otel/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>
+
+<!--DETAILS-->
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+            title: setData,
+            html: true,
+            placement: 'right'
+
+        });
+        function setData(otelID) {
+            var set_data = '';
+            var element = $(this);
+            var otelID = element.attr("id");
+            $.ajax({
+                url: "/Otel/OtelInfo?otelID" + otelID,
+                method: "post",
+                async: false,
+                data: { otelID: otelID },
+                success: function (data) {
+                    set_data = data;
+                }
+
+            });
+            return set_data;
+        }
+    });
+</script>

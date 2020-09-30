@@ -1,0 +1,81 @@
+﻿@model IList<TourApp.Models.Otel>
+
+
+@foreach (var item in Model)
+{
+
+    <div class="card">
+        <div class="card-content">
+            <div class="row no-gutters">
+                <div class="col-md-12 col-lg-4">
+                    <img src="@item.otelResim" alt="element 01" class="h-100 w-100 rounded-left">
+                </div>
+                <div class="col-md-12 col-lg-8">
+                    <div class="card-body">
+                        <div class="card-text text-dark">
+                            <span class="font-weight-bold font-size-small">Tek Kişilik: </span><span class="font-italic font-size-small font-size-small">@item.otelSingleRoomFiyat @item.otelFiyatBirimi</span>
+                        </div>
+                        <div class="card-text text-dark">
+                            <span class="font-weight-bold font-size-small">Çift Kişilik: </span><span class="font-italic font-size-small">@item.otelDoubleRoomFiyat @item.otelFiyatBirimi</span>
+                        </div>
+                        <div class="card-text text-dark">
+                            <span class="font-weight-bold font-size-small">Aile Fiyati: </span><span class="font-italic font-size-small">@item.otelFamilyRoomFiyat @item.otelFiyatBirimi</span>
+                        </div>
+                        <div class="card-text text-dark">
+                            <span class="font-weight-bold font-size-small">King Suit: </span><span class="font-italic font-size-small">@item.otelKingSuitFiyat @item.otelFiyatBirimi</span>
+                        </div>
+                        <br />
+                        <div class="card-text text-ellipsis text-dark">
+                            @item.otelAdres
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="col-md-8">
+            <div class="card bg-dark rounded-sm">
+                <div class="card-content">
+                    <img src="@item.otelResim" class="card-img-top img-fluid" alt="singleminded">
+                    <br /> <br />
+                           <div class="card-body">
+                               <h5 class="card-title text-white">@item.otelAd</h5>
+                               <p class="card-text text-white">
+                                   @item.otelAdres
+                               </p>
+                               <p class="card-text text-white">
+                                   <span class="font-weight-bold">Tek Kişilik: </span><span class="font-italic">@item.otelSingleRoomFiyat @item.otelFiyatBirimi</span>
+                               </p>
+                               <p class="card-text text-white">
+                                   <span class="font-weight-bold">Çift Kişilik: </span><span class="font-italic">@item.otelDoubleRoomFiyat @item.otelFiyatBirimi</span>
+                               </p>
+                               <p class="card-text text-white">
+                                   <span class="font-weight-bold">Aile Fiyati: </span><span class="font-italic">@item.otelFamilyRoomFiyat @item.otelFiyatBirimi</span>
+                               </p>
+                               <p class="card-text text-white">
+                                   <span class="font-weight-bold">King Suit: </span><span class="font-italic">@item.otelKingSuitFiyat @item.otelFiyatBirimi</span>
+                               </p>
+                           </div>
+                </div>
+
+            </div>
+        </div>*@
+}
+
+
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/vendors/css/vendors.min.css">
+<!-- END: Vendor CSS-->
+<!-- BEGIN: Theme CSS-->
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/bootstrap-extended.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/colors.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/components.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/themes/dark-layout.css">
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/themes/semi-dark-layout.css">
+<!-- END: Theme CSS-->
+<!-- BEGIN: Page CSS-->
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/core/menu/menu-types/vertical-menu.css">
+<!-- END: Page CSS-->
+<!-- BEGIN: Custom CSS-->
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/assets/css/style.css">

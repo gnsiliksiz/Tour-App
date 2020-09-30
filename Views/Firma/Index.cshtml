@@ -1,0 +1,245 @@
+﻿@if (Session["anaFirmaAdi"] != null)
+{
+    Response.Redirect("~/Hata/InsufficientPrivileges");
+}
+
+
+@model IList<TourApp.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<button type="button" class="btn btn-primary mb-1" data-toggle="modal" data-target="#mediumModal">
+    Firma Tanımla
+</button>
+
+<br />
+<br />
+<!-- Firmalar-->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title text-danger">Firmalar</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body card-dashboard">
+                    <p class="card-text">
+                        Kullanıcılar
+                    </p>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration">
+                            <thead>
+                                <tr>
+                                    <th>Kullanıcı</th>
+                                    <th>Aktif mi</th>
+                                    <th>Email</th>
+                                    <th>İsim</th>
+                                    <th>Telefon</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            <span class="text text-danger">@item.username</span>
+                                            <br />
+                                            <small>
+                                                Created 01.01.2019
+                                                @Html.DisplayFor(modelItem => item.createDate)
+                                            </small>
+                                        </td>
+                                        <td>
+                                            @if (item.active == true)
+                                            {
+                                                <span class="badge badge-success">Aktif</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">Onaylanmamış</span>
+                                            }
+
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.isim)
+                                        </td>
+                                        <td>
+                                            <span class="text text-warning">@item.telefon</span>
+                                        </td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></span>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item" href="@Url.Action("Edit", "Firma", new { userID = item.userID })"><i class="bx bx-edit-alt mr-1"></i> Düzenle</a>
+                                                    <a class="dropdown-item"><i class="bx bx-trash mr-1" data-toggle="modal" data-target="#DeleteConfirmation" onclick="DeleteFirmaRecord(@item.userID)"></i> Sil</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADD MODAL-->
+<div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">Yeni Firma Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" class="" id="Registration">
+                    @Html.Hidden("userID")
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("username", null, new { @placeholder = "Username", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("email", null, new { @placeholder = "Email", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("isim", null, new { @placeholder = "Isim", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("password", null, new { @placeholder = "Şifre", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("telefon", null, new { @placeholder = "Telefon", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            @Html.TextBox("adres", null, new { @placeholder = "Adres", @class = "form-control" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-primary" onclick="SaveForm()">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="DeleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModal">Firma Sil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p> Seçilen Firmayı silmek istediğinize emin misiniz ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Iptal</button>
+                <button type="button" class="btn btn-danger" onclick="ConfirmDelete()">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+<script>
+    $(function () {
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": true,
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#message1").hide();
+        $("#message2").hide();
+    });
+    function AddNewFirma() {
+        $("#AddModal").modal();
+        //$("#message2").hide();
+    }
+
+    function SaveForm() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var email = $("#email").val();
+        var adres = $("#adres").val();
+        if (username == "" || password == "" || email == "" || adres == "") {
+            //$("#message1").hide();
+            alert("Girdiginiz Bilgiler Eksik veya hatalıdır.")
+            //$("#message2").show();
+            return false;
+        }
+        var data = $("#Registration").serialize();
+        $.ajax({
+            type: "post",
+            data: data,
+            url: "/Firma/SaveData",
+            success: function (result) {
+                $("#message1").show();
+                $("#message2").hide();
+                alert("Ekleme islemi Basarili!..");
+                window.location.href = "/Firma/index";
+                $("#Registration")[0].reset();
+            }
+        });
+    }
+</script>
+
+<script>
+    //Show The Popup Modal For DeleteComfirmation
+    var DeleteFirmaRecord = function (userID) {
+        $("#userID").val(userID);
+        $("#DeleteConfirmation").modal("show");
+    }
+    var ConfirmDelete = function () {
+        var userID = $("#userID").val();
+        $.ajax({
+            type: "POST",
+            url: "/Firma/DeleteFirmaRecord?userID=" + userID,
+            success: function (result) {
+                alert("Silme islemi Basarili!..");
+                window.location.href = "/Firma/Index";
+                $("#DeleteConfirmation").modal("hide");
+                $("#modal .close").click();
+            }
+        })
+    }
+</script>

@@ -1,0 +1,138 @@
+﻿@if (Session["userID"] == null)
+{
+    Response.Redirect("~/Hata/InsufficientPrivileges");
+}
+@model TourApp.Models.Rehber
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("Edit", "Rehber", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("rehberID")
+    <div class="col-md-12 col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Rehber Düzenle</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="form form-vertical">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Ad</label>
+                                        <div class="position-relative has-icon-left">
+                                            @Html.EditorFor(model => model.rehberAd, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div class="form-control-position">
+                                                <i class="bx bx-user"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Kullanıcı Adı</label>
+                                        <div class="position-relative has-icon-left">
+                                            @Html.EditorFor(model => model.rehberUsername, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div class="form-control-position">
+                                                <i class="bx bx-user"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <div class="position-relative has-icon-left">
+                                            @Html.EditorFor(model => model.rehberEmail, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+                                            <div class="form-control-position">
+                                                <i class="bx bx-mail-send"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Telefon</label>
+                                        <div class="position-relative has-icon-left">
+                                            @Html.EditorFor(model => model.rehberTelefon, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                                            <div class="form-control-position">
+                                                <i class="bx bx-mobile"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Şifre</label>
+                                        <div class="position-relative has-icon-left">
+                                            @Html.EditorFor(model => model.rehberPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div class="form-control-position">
+                                                <i class="bx bx-lock"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Cinsiyet</label>
+                                        <div class="col-md-10">
+                                            <select class="form-control" id="rehberCinsiyet" name="rehberCinsiyet">
+                                                <option value="-">Cinsiyeti Seçin</option>
+                                                <option value="Bay">Bay</option>
+                                                <option value="Bayan">Bayan</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Adres</label>
+                                        <div class="position-relative has-icon-left">
+                                            @Html.EditorFor(model => model.rehberAdres, new { htmlAttributes = new { @class = "form-control" } })
+                                            <div class="form-control-position">
+                                                <i class="bx bx-lock"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Fotograf</label>
+                                        <div class="col-md-10">
+                                            <input type="file" name="rehberPhoto" id="rehberPhoto" value="" accept=".jpg,.png,.gif,.JPEG,.jpeg" class="form-control" />
+                                        </div>
+                                    </div>
+                                    @if (Model.rehberPhoto != null)
+                                    {
+                                        <div class="form-group">
+                                            @Html.Label("Mevcut Foto", htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                <img src="@Model.rehberPhoto" alt="IMAGES" />
+                                            </div>
+
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-light-secondary mr-1 mb-1">Onayla</button>
+                                    <button type="reset" class="btn btn-light-secondary mr-1 mb-1">İptal</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>

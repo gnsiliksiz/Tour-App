@@ -1,0 +1,30 @@
+﻿@model IEnumerable<TourApp.Models.Otel>
+
+@{
+    ViewBag.Title = "OtelInfo";
+    Layout = null;
+}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<div class="container">
+    <h2 class="info">Otel Detayları</h2>
+    <div>------------------------------</div>
+    @foreach (var item in Model)
+    {
+        @if (@item.otelResim != null)
+        {
+            <img src="@item.otelResim" alt="IMAGES" />
+        }
+
+        <br /> <br />
+        <p><strong>Otel İsmi : </strong> @item.otelAd</p>
+        <p><strong>Adres : </strong> @item.otelAdres</p>
+        <p><strong>SingleRoom Fiyat : </strong> @item.otelSingleRoomFiyat @item.otelFiyatBirimi</p>
+        <p><strong>DoubleRoom Fiyat : </strong> @item.otelDoubleRoomFiyat @item.otelFiyatBirimi</p>
+        <p><strong>King Suit Fiyat : </strong> @item.otelKingSuitFiyat @item.otelFiyatBirimi</p>
+        <p><strong>Family Room Fiyat : </strong> @item.otelFamilyRoomFiyat @item.otelFiyatBirimi</p>
+    }
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>

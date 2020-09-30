@@ -1,0 +1,276 @@
+﻿@model TourApp.Models.Kotasyon
+
+@{
+    ViewBag.Title = "KotasyonDetay";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<section class="invoice-view-wrapper">
+    <div class="row">
+        <!-- invoice view page -->
+        <div class="col-xl-9 col-md-8 col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body pb-0 mx-25">
+                        <!-- header section -->
+                        <div class="row">
+                            <div class="col-xl-4 col-md-12">
+                                <span class="invoice-number mr-50">Kotasyon#</span>
+                                <span>@Model.kotasyonID</span>
+                            </div>
+                            <div class="col-xl-8 col-md-12">
+                                <div class="d-flex align-items-center justify-content-xl-end flex-wrap">
+                                    <div class="mr-1">
+                                        <small class="text-muted">Kişi Sayısı:</small>
+                                        <span>@Model.kotasyonKisiSayisi</span>
+                                    </div>
+                                    <div class="mr-1">
+                                        <small class="text-muted">Başlangıç Tarihi:</small>
+                                        <span>@Convert.ToDateTime(Model.kotasyonBas).ToShortDateString()</span>
+                                    </div>
+                                    <div>
+                                        <small class="text-muted">Bitiş Tarihi:</small>
+                                        <span>@Convert.ToDateTime(Model.kotasyonBit).ToShortDateString()</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- logo and title -->
+                        <div class="row my-3">
+                            <div class="col-6">
+                                <h4 class="text-primary">Kotasyon</h4>
+                                <span>@Model.kotasyonAd</span>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <!-- invoice address and contact -->
+                        <div class="row invoice-info">
+                            <div class="col-6 mt-1">
+                                <h6 class="invoice-from">Teklif Yapan Firma</h6>
+                                <div class="mb-1">
+                                    <span>@Model.AltFirma.altFirmaAd</span>
+                                </div>
+                                <div class="mb-1">
+                                    <span>@Model.AltFirma.altFirmaAdres</span>
+                                </div>
+                                <div class="mb-1">
+                                    <span>@Model.AltFirma.altFirmaEmail</span>
+                                </div>
+                                <div class="mb-1">
+                                    <span>@Model.AltFirma.altFirmaTel</span>
+                                </div>
+                            </div>
+                            <div class="col-6 mt-1">
+                                <h6 class="invoice-to">Ana Firma</h6>
+                                <div class="mb-1">
+                                    <span>@ViewBag.AnaFirma</span>
+                                </div>
+                                <div class="mb-1">
+                                    <span>@ViewBag.AnaFirmaAdres</span>
+                                </div>
+                                <div class="mb-1">
+                                    <span>@ViewBag.AnaFirmaEmail</span>
+                                </div>
+                                <div class="mb-1">
+                                    <span>@ViewBag.AnaFirmaTelefon</span>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+
+                    <div class="invoice-product-details table-responsive mx-md-25">
+                        <!-- Oteller-->
+                        @{
+                            var otelFatura = 0;
+                            var muzeFatura = 0;
+                            var restorantFatura = 0;
+                            var ekstraFatura = 0;
+                            var aracFatura = 0;
+                            var genelTutar = 0;
+                        }
+                        <table class="table table-borderless mb-0">
+                            <thead>
+                                <tr class="border-0">
+                                    <th scope="col">Otel</th>
+                                    <th scope="col">Başlangıç</th>
+                                    <th scope="col">Bitiş</th>
+                                    <th scope="col">Tutar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.OtelKots)
+                                {
+                                    otelFatura = otelFatura + @Convert.ToInt32(item.otelToplamFiyat);
+                                    <tr>
+                                        <td>@item.Otel.otelAd</td>
+                                        <td>@item.otelkotTarih.Substring(0, 19)</td>
+                                        <td>@item.otelkotTarih.Substring(21)</td>
+                                        <td class="text-primary font-weight-bold">@item.otelToplamFiyat @item.Otel.otelFiyatBirimi</td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                        </table>
+                        <hr />
+                        <!--MUZELER-->
+                        <table class="table table-borderless mb-0">
+                            <thead>
+                                <tr class="border-0">
+                                    <th scope="col">Müze</th>
+                                    <th scope="col">Başlangıç</th>
+                                    <th scope="col">Bitiş</th>
+                                    <th scope="col">Tutar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.MuzeKots)
+                                {
+                                    muzeFatura = muzeFatura + @Convert.ToInt32(item.muzeToplamFiyat);
+                                    <tr>
+                                        <td>@item.Muze.muzeAd</td>
+                                        <td>@item.muzeTarih.Substring(0, 19)</td>
+                                        <td>@item.muzeTarih.Substring(21)</td>
+                                        <td class="text-primary font-weight-bold">@item.muzeToplamFiyat @item.Muze.muzeFiyatBirim</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <hr />
+                        <!--RESTORANTLAR-->
+                        <table class="table table-borderless mb-0">
+                            <thead>
+                                <tr class="border-0">
+                                    <th scope="col">Restorant</th>
+                                    <th scope="col">Başlangıç</th>
+                                    <th scope="col">Bitiş</th>
+                                    <th scope="col">Tutar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.ResKots)
+                                {
+                                    restorantFatura = restorantFatura + @Convert.ToInt32(item.resToplamFiyat);
+                                    <tr>
+                                        <td>@item.Restorant.restorantAd</td>
+                                        <td>@item.reskotTarih.Substring(0, 19)</td>
+                                        <td>@item.reskotTarih.Substring(21)</td>
+                                        <td class="text-primary font-weight-bold">@item.resToplamFiyat @item.Restorant.restorantFiyatBirimi</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <hr />
+                        <!--EKSTRALAR-->
+                        <table class="table table-borderless mb-0">
+                            <thead>
+                                <tr class="border-0">
+                                    <th scope="col">Etkinlik</th>
+                                    <th scope="col">Başlangıç</th>
+                                    <th scope="col">Bitiş</th>
+                                    <th scope="col">Tutar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.EkstraKots)
+                                {
+                                    ekstraFatura = ekstraFatura + @Convert.ToInt32(item.ekstraToplamFiyat);
+                                    <tr>
+                                        <td>@item.Ekstra.ekstraAd</td>
+                                        <td>@item.ekstraTarih.Substring(0, 19)</td>
+                                        <td>@item.ekstraTarih.Substring(21)</td>
+                                        <td class="text-primary font-weight-bold">@item.ekstraToplamFiyat @item.Ekstra.ekstraFiyatBirimi</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <hr />
+                        <!--ARAÇ-->
+                        <table class="table table-borderless mb-0">
+                            <thead>
+                                <tr class="border-0">
+                                    <th scope="col">Araç Marka</th>
+                                    <th scope="col">Plaka</th>
+                                    <th scope="col">Günlük Fiyat</th>
+                                    <th scope="col">Tutar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.AracKots)
+                                {
+                                    aracFatura = aracFatura + @Convert.ToInt32(item.aracToplamFiyat);
+                                    <tr>
+                                        <td>@item.Arac.aracMarka</td>
+                                        <td>@item.Arac.aracPlaka</td>
+                                        <td>@item.Arac.aracFiyat</td>
+                                        <td class="text-primary font-weight-bold">@item.aracToplamFiyat @item.Arac.aracFiyatBirim</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @{genelTutar = (otelFatura + muzeFatura + restorantFatura + ekstraFatura + aracFatura); }
+                    </div>
+
+
+                    <!-- invoice subtotal -->
+                    <div class="card-body pt-0 mx-25">
+                        <hr>
+                        <div class="row">
+                            <div class="col-4 col-sm-6 mt-75">
+                                <p>Teklifiniz için teşekkür ederiz.</p>
+                            </div>
+                            <div class="col-8 col-sm-6 d-flex justify-content-end mt-75">
+                                <div class="invoice-subtotal">
+                                    
+                                    <div class="invoice-calc d-flex justify-content-between">
+                                        <span class="invoice-title">Toplam Tutar</span>
+                                        <span class="invoice-value"><span class="text text-success font-weight-bold">@genelTutar.ToString("#.00")</span></span>
+                                    </div>
+                                    @*<div class="invoice-calc d-flex justify-content-between">
+                                        <span class="invoice-title">Balance (USD)</span>
+                                        <span class="invoice-value">$ 10,953</span>
+                                    </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- invoice action  -->
+        <div class="col-xl-3 col-md-4 col-12">
+            <div class="card invoice-action-wrapper shadow-none border">
+                <div class="card-body">
+                    <div class="invoice-action-btn">
+                        <button class="btn btn-primary btn-block invoice-send-btn">
+                            <i class="bx bx-send"></i>
+                            <span>Send Invoice</span>
+                        </button>
+                    </div>
+                    <div class="invoice-action-btn">
+                        <button class="btn btn-light-primary btn-block">
+                            <span>Download</span>
+                        </button>
+                    </div>
+                    <div class="invoice-action-btn">
+                        <a href="app-invoice-edit.html" class="btn btn-light-primary btn-block">
+                            <span>Edit Invoice</span>
+                        </a>
+                    </div>
+                    <div class="invoice-action-btn">
+                        <button class="btn btn-success btn-block">
+                            <i class='bx bx-dollar'></i>
+                            <span>Add Payment</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<link rel="stylesheet" type="text/css" href="~/frest-admin-v1.0/app-assets/css/pages/app-invoice.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/frest-admin-v1.0/app-assets/js/scripts/pages/app-invoice.js"></script>
